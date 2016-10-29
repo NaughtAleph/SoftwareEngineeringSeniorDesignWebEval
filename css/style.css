@@ -2,10 +2,6 @@ body {
 	background: #b30738;
 }
 
-.category {
-	padding: 5px;
-}
-
 #errormessage {
 	color: #ccc;
 	
@@ -22,16 +18,23 @@ body {
 	left: 0;
 }
 
+#final_submit {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+}
+
 #form {
 	background: white;
 	width: 660px;
-	height: 700px;
+	height: 900px;
 	padding: 20px;
 	z-index: 101;
 	position: absolute;
 	top: 70px;
 	left: 50%;
 	margin-left: -350px;
+	margin-bottom: 70px;
 }
 
 .form_title {
@@ -65,12 +68,18 @@ body {
 	font-size: 30px;
 }
 
+.search {
+	margin: 50px;
+}
+
 .tab {
 	padding-left: 3em;
 }
 
-td {
-	padding: 5px 15px;
+textarea {
+	width: 500px;
+	height: 100px;
+	resize: none;
 }
 
 .title {

@@ -9,7 +9,7 @@ function evaluate(clicked) {
 	pres = presentations[clicked.id];
 	$("body").append("<div id='fade'></div>");
 	$("#fade").click(function() {
-		save_form();
+		save_form(clicked);
 	});
 
 	$("body").append("<div id='form'></div>");
@@ -18,7 +18,28 @@ function evaluate(clicked) {
 	populate_info(clicked);
 	$("#form").append("<div id='input'></div>");
 	populate_form(clicked);
+
+	if ($(window).width() < 700) {
+		$("#form").css("left","0")
+		$("#form").css("margin-left","0")
+	} else if ($(window).width() < 720 && $("body").height() > $(window).height()) {
+		$("#form").css("left","0")
+		$("#form").css("margin-left","0")
+	}
 }
+
+$(window).resize(function() {
+	if ($(window).width() < 700) {
+		$("#form").css("left","0")
+		$("#form").css("margin-left","0")
+	} else if ($(window).width() < 720 && $("body").height() > $(window).height()) {
+		$("#form").css("left","0")
+		$("#form").css("margin-left","0")
+	} else {
+		$("#form").css("left","50%");
+		$("#form").css("margin-left","-350px");
+	}
+});
 
 function populate_info(clicked) {
 	var pres = presentations[clicked.id];
@@ -113,7 +134,7 @@ function populate_form(clicked) {
 		"<td><input type='radio' name='res_qa' value='3' />3</td>"+
 		"<td><input type='radio' name='res_qa' value='4' />4</td>"+
 		"<td><input type='radio' name='res_qa' value='5' />5</td></tr></table>");
-	$("#input").append("<div class='form_title'>Prsentation</div>");
+	$("#input").append("<div class='form_title'>Presentation</div>");
 	$("#input").append("<div id='pres'></div>");
 	$("#pres").append("<table><tr><td class='category'>Organization</td>"+
 		"<td><input type='radio' name='org' value='1' />1</td>"+
@@ -140,22 +161,45 @@ function populate_form(clicked) {
 		"<td><input type='radio' name='con_poi' value='4' />4</td>"+
 		"<td><input type='radio' name='con_poi' value='5' />5</td></tr></table>");
 
+
+	$("#input").append("<div>Please check each of the following considerations that were addressed in the presentation:</div>");
+	$("#input").append("<div><input type='checkbox' name='addressed' value='econ' />Economic</div>");
+	$("#input").append("<div><input type='checkbox' name='addressed' value='envi' />Environmental</div>");
+	$("#input").append("<div><input type='checkbox' name='addressed' value='sust' />Sustainability</div>");
+	$("#input").append("<div><input type='checkbox' name='addressed' value='manu' />Manufactuability</div>");
+	$("#input").append("<div><input type='checkbox' name='addressed' value='ethi' />Ethical</div>");
+	$("#input").append("<div><input type='checkbox' name='addressed' value='hands' />Health and Safety</div>");
+	$("#input").append("<div><input type='checkbox' name='addressed' value='soci' />Social</div>");
+	$("#input").append("<div><input type='checkbox' name='addressed' value='poli' />Political</div>");
+	$("#input").append("<div><textarea id='comments' placeholder='Additional comments (Optional)' /></div>");
 	$("#input").append("<button id='submit'>Submit</button><button id='cancel'>Cancel</button>");
 	$("#submit").click(function() {save_form(clicked);});
 	$("#cancel").click(function() {cancel_form();});
 	for (var i=0; i<scoring.length; i++) {
-		if (isNaN(scores[clicked.id][i])) continue;
-		$("input[name="+scoring[i]+"][value="+scores[clicked.id][i]+"]").prop('checked',true);
+		if (isNaN(scores[clicked.id]['values'][i])) continue;
+		$("input[name="+scoring[i]+"][value="+scores[clicked.id]['values'][i]+"]").prop('checked',true);
 	}
+	for (var i=0; i<scores[clicked.id]['considerations'].length; i++) {
+		//console.log($("input[value="+scores[clicked.id]['considerations']));
+		$("input[value="+scores[clicked.id]['considerations'][i]+"]").prop('checked', true);
+	}
+	$("#comments").val(scores[clicked.id]["comments"]);
 }
 
 function save_form(clicked) {
+	//TODO How to change to not use the ids but still keep things in order?
+	var cons = $("input[name=addressed]:checked");
 	var score = [];
 	for (var i=0; i<scoring.length; i++) {
 		score.push(parseInt($("input[name="+scoring[i]+"]:checked").val()));
 	}
 	//add save form
-	scores[clicked.id] = score;
+	scores[clicked.id]['values'] = score;
+	scores[clicked.id]['considerations'] = [];
+	for (var i=0; i<cons.length; i++) {
+		scores[clicked.id]['considerations'].push(cons[i].value);
+	}
+	scores[clicked.id]['comments'] = $("#comments").val();
 	check_scores();
 	cancel_form();
 }
@@ -188,6 +232,10 @@ function check_scores() {
 	}
 }
 
+$.get('php/check_session.php', function(data) {
+	if (data == "new" || data == "no") window.location.href = "index.html";
+});
+
 $.get('php/get_session_info.php', function(data) {
 	if (data != "Not logged in") {
 		session_info = JSON.parse(data);
@@ -211,7 +259,7 @@ function get_pres() {
 			empty.push(NaN);
 		}
 		for (var i = 0, len = data.length; i<len; i++) {
-			scores.push(empty);
+			scores.push({'values':empty, 'considerations':[],'comments':''});
 			$("#presentations").append("<div class='pres' id='"+parseInt(i)+"'></div>");
 			$("#"+parseInt(i)).append("<div class='prestitle'>"+parseInt(i+1)+". "+data[i]["title"]+"</div>");
 			var members = data[i]["members"];
@@ -231,5 +279,11 @@ function get_pres() {
 				evaluate(this);
 			});
 		}
+		$("body").append("<button id='final_submit'>Submit</button>");
+		$("#final_submit").click(function() {
+			$.post("php/save_scores.php", {scores: JSON.stringify(scores),name: judge}, function(data) {
+				window.location.href = "index.html";
+			});
+		});
 	});
 }

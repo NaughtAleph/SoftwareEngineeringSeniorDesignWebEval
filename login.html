@@ -7,12 +7,12 @@
 </head>
 <body>
 	<h1 class="title">Senior Design Evaluation</h1>
-	<button id="login">Login</button>
-	<form action="php/verify_key.php" method="POST">
-		<input type="text" placeholder="Session Key" name="key"></input>
-		<button type='submit'>Submit</button>
+	<form action="php/verify_login.php" method="POST">
+		<input type="text" placeholder="Username" name="uname"></input>
+		<br><input type="password" placeholder="Password" name="pass"></input>
+		<br><button type='submit'>Submit</button>
 	</form>
 	<div id="errormessage"></div>
-	<script src="js/index.js"></script>
+	<script src="js/login.js"></script>
 </body>
 </html>
