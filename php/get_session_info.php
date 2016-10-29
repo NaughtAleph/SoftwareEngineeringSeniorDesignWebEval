@@ -11,5 +11,7 @@
 			}
 		}
 	}
-	echo "Not logged in";
+	else {
+		echo "Not logged in";
+	}
 ?>

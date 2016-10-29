@@ -7,15 +7,22 @@
 </head>
 <body>
 	<h1 class="title">Senior Design Evaluation</h1>
-	<button id="download_sample">Download Sample Config File</button>
-	<button id="upload">Upload Config File</button>
-	<button id="download_report">Download Report</button>
+	<div class='search'>
+		<form action="php/download_report.php" method="GET">
+			<div>Select Year: 
+				<select name='year' id='report_year'>
+				</select>
+			</div>
+			<button type='submit' id="download_report">Download Report</button>
+		</form>
+	</div>
 	<div class='search'>
 		<form action="php/get_evals_year.php" method="GET">
-			<div>Search Evaluations by Year<div>
-			<select name="year" id='year'>
-			</select>
-			<button type='submit'>Submit</button>
+			<div>Search Evaluations For:
+				<select name="year" id='year'>
+				</select>
+			</div>
+			<button type='submit'>Search</button>
 		</form>
 	</div>
 	<script src="js/admin.js"></script>

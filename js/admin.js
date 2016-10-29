@@ -8,6 +8,7 @@ $.get("php/get_years.php", function(data) {
 	var dlen = data.length;
 	for (var i=0; i<dlen; i++) {
 		$("#year").append("<option value='"+data[i]+"'>"+data[i]+"</option>");
+		$("#report_year").append("<option value='"+data[i]+"'>"+data[i]+"</option>");
 	}
 });
 

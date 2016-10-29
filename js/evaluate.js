@@ -30,11 +30,11 @@ function evaluate(clicked) {
 
 $(window).resize(function() {
 	if ($(window).width() < 700) {
-		$("#form").css("left","0")
-		$("#form").css("margin-left","0")
+		$("#form").css("left","0");
+		$("#form").css("margin-left","0");
 	} else if ($(window).width() < 720 && $("body").height() > $(window).height()) {
-		$("#form").css("left","0")
-		$("#form").css("margin-left","0")
+		$("#form").css("left","0");
+		$("#form").css("margin-left","0");
 	} else {
 		$("#form").css("left","50%");
 		$("#form").css("margin-left","-350px");
@@ -237,6 +237,7 @@ $.get('php/check_session.php', function(data) {
 });
 
 $.get('php/get_session_info.php', function(data) {
+	console.log(data);
 	if (data != "Not logged in") {
 		session_info = JSON.parse(data);
 		$("#judge").append("<input type='text' placeholder='Insert Your Name' id='judgename'><button id='name'>Submit</button>");
