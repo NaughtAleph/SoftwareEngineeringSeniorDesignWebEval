@@ -2,6 +2,11 @@ body {
 	background: #b30738;
 }
 
+.centerbutton {
+	margin: auto;
+	display: block;
+}
+
 #errormessage {
 	color: #ccc;
 	
@@ -77,6 +82,24 @@ body {
 	padding-left: 3em;
 }
 
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+table, th, td {
+	border: black solid 1px;
+}
+
+.table-title {
+	text-align: center;
+}
+
+td {
+	padding: 5px;
+	min-width: 100px;
+}
+
 textarea {
 	width: 500px;
 	height: 100px;
@@ -87,4 +110,10 @@ textarea {
 	color: #ccc;
 	text-align: center;
 	margin: 20px 70px;
+}
+
+#title-search, #presenter-search, #dept, #sess {
+	padding: 1%;
+	width: 98%;
+	border: 0;
 }

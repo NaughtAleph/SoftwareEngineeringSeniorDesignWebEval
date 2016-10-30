@@ -237,9 +237,9 @@ $.get('php/check_session.php', function(data) {
 });
 
 $.get('php/get_session_info.php', function(data) {
-	console.log(data);
 	if (data != "Not logged in") {
 		session_info = JSON.parse(data);
+		$("#session").text(session_info['session'] + " - " + session_info['room']);
 		$("#judge").append("<input type='text' placeholder='Insert Your Name' id='judgename'><button id='name'>Submit</button>");
 
 		$("#name").click(function() {
@@ -247,6 +247,8 @@ $.get('php/get_session_info.php', function(data) {
 			$("#judge").text(judge);
 			get_pres();
 		});
+	} else {
+		window.location.href = "index.html";
 	}
 });
 

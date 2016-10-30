@@ -5,12 +5,10 @@
 			$year = $_GET["year"];
 			if (!ctype_digit($year)) {
 				header("Location: ../admin.html");
-				die();
+				die;
 			}
-			$files = scandir("scores/".$year);
-			array_shift($files);
-			array_shift($files);
-			echo json_encode($files);
+			header("Location: ../search.html?year=".$year);
+			die;
 		}
 	}
 ?>

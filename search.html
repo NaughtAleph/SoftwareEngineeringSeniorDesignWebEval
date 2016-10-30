@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+<body>
+	<h1 class="title">Senior Design Evaluation</h1>
+	<table id='search-table'>
+		<tr class='perm'>
+			<td class='table-title'>Title</td>
+			<td class='table-title'>Presenters</td>
+			<td class='table-title'>Department</td>
+			<td class='table-title'>Session</td>
+			<td class='table-title'>Download</td>
+		</tr>
+		<tr class='perm'>
+			<td><input type='text' id='title-search'/></td>
+			<td><input type='text' id='presenter-search'</td>
+			<td><select name='dept' id='dept'>
+				<option value="none" class="perm"></option>
+			</select></td>
+			<td><select name='sess' id='sess'>
+				<option value="none" class="perm"></option>
+			</select</td>
+			<td><button class='centerbutton'>Download All</button></td>
+		</tr>
+	</table>
+	<script src="js/search.js"></script>
+	<noscript>
+		Javascript Disabled.
+		<meta HTTP-EQUIV="REFRESH" content="0; url=login.html">
+	</noscript>
+</body>
+</html>
