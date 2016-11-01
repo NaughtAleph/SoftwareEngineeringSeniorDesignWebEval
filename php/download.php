@@ -156,7 +156,7 @@
 	</ul>
 	<div class='title'>Comments</div>
 	<ul>
-		<?php foreach ($comments as $c) echo "<li>".$c."</li>"; ?>
+		<?php foreach ($comments as $c) echo "<li>".htmlspecialchars($c)."</li>"; ?>
 	</ul>
 </body>
 </html>

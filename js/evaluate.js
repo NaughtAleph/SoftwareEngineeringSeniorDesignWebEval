@@ -256,8 +256,24 @@ $.get('php/get_session_info.php', function(data) {
 
 		$("#name").click(function() {
 			judge = $("#judgename").val();
-			$("#judge").text(judge);
-			get_pres();
+			$.get("php/check_judge.php",{name:judge}, function(data) {
+				if (data == "die")
+					window.location = "index.html";
+				if (data == "no") {
+					$("#judge").html("");
+					$("#judge").text(judge);
+					get_pres();
+				} else if (data == "yes") {
+					var check = confirm("Your name is already in the system. Perhaps you've already submitted scores?\nIf you would like to continue, overwriting your previous submitted scores, press OK.\nOtherwise, please press cancel and give a different name.")
+					if (check) {
+						$("#judge").html("");
+						$("#judge").text(judge);
+						get_pres();
+					} else {
+						$("#judgename").val("");
+					}
+				}
+			});
 		});
 	} else {
 		window.location.href = "index.html";
