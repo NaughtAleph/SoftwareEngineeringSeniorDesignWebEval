@@ -12,10 +12,10 @@ $.get("php/get_years.php", function(data) {
 	}
 });
 
-$.get('php/get_all_presentations.php', function(data) {
+/*$.get('php/get_all_presentations.php', function(data) {
 	data = JSON.parse(data);
 	data = data["presentations"];
 	presentations = data;
-});
+});*/
 
 

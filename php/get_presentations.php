@@ -2,7 +2,8 @@
 	session_start();
 	if($_SESSION['login'] == 1) {
 		$key = $_SESSION['key'];
-		$string = file_get_contents(__DIR__ . "/secrets/presentations.json") or die("Unable to get presentations.");
+		$year = date("Y");
+		$string = file_get_contents("secrets/".$year."/presentations.json") or die("Unable to get presentations.");
 		$json = json_decode($string, true);
 		$ret = [];
 		foreach($json['presentations'] as $pres) {

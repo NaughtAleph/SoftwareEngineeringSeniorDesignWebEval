@@ -2,7 +2,7 @@
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$uname = $_POST['uname'];
 		$pass = $_POST['pass'];
-		$cont = file_get_contents(__DIR__ . "/secrets/sessionkeys.json") or die("Unable to get login info");
+		$cont = file_get_contents("secrets/login.json") or die("Unable to get login info");
 		$login = json_decode($cont, true);
 		if (!array_key_exists($uname, $login['login'])) {
 			session_start();

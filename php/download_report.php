@@ -3,7 +3,7 @@
 	if ($_SESSION["admin"] == 1) {
 		$year = $_GET["year"];
 
-		$presentations = file_get_contents("secrets/presentations.json") or die("Unable to get presentations");
+		$presentations = file_get_contents("secrets/".$year."/presentations.json") or die("Unable to get presentations");
 		$presentations = json_decode($presentations);
 		$session = $presentations->sessioninfo;
 		$presentations = $presentations->presentations;

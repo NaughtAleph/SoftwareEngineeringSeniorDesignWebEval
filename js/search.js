@@ -14,10 +14,12 @@ document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
 });
 
 $.get('php/check_login.php', function(data) {
-	if (data == "new" || data == "no") window.location.href = "login.html";
+	if (data == "new" || data == "no") window.location = "login.html";
 });
 
-$.get('php/get_all_presentations_admin.php', function(data) {
+$.get('php/get_all_presentations_admin.php', {year: $_GET["year"]}, function(data) {
+	if (data == "die")
+		window.location = "admin.html";
 	data = JSON.parse(data);
 	session_info = data["sessioninfo"];
 	presentations = data["presentations"];
@@ -27,13 +29,13 @@ $.get('php/get_all_presentations_admin.php', function(data) {
 });
 
 function update_results(results) {
-	console.log(results);
+	current_pres = results;
 	$("tr").not($(".perm")).remove();
 	$("option").not($(".perm")).remove();
 	var rlen = results.length;
 	for (var i=0; i<rlen; i++) {
 		$("#search-table").append("<tr id='"+i+"'></tr>");
-		$("#"+i).append("<td id='title"+i+"'></td><td id='presenters"+i+"'></td><td id='dept"+i+"'></td><td id='sess"+i+"'></td><td><button id='download"+i+"' class='centerbutton'>Download</button></td>");
+		$("#"+i).append("<td id='title"+i+"'></td><td id='presenters"+i+"'></td><td id='dept"+i+"'></td><td id='sess"+i+"'></td><td><button id='download"+i+"' class='centerbutton' id='button"+i+"'>Download</button></td>");
 		$("#title"+i).text(results[i]['title']);
 		$("#presenters"+i).text(member_string(results[i]["members"]));
 		$("#dept"+i).text(results[i]["department"]);
@@ -46,6 +48,7 @@ function update_results(results) {
 		if ($.inArray(session, sessions) < 0) {
 			sessions.push(session);
 		}
+		set_download_func(i, results);
 	}
 	
 	var dlen = departments.length;
@@ -58,6 +61,12 @@ function update_results(results) {
 		var string = $("<div/>").html(sessions[i]).text();
 		$("#sess").append("<option value='"+string+"'>"+string+"</option>");
 	}
+}
+
+function set_download_func(i, results) {
+	$("#download"+i).click(function() {
+		window.location = "php/download.php?year="+$_GET["year"]+"&key="+results[i]["key"]+"&num="+results[i]["number"];
+	});
 }
 
 function member_string(members) {
@@ -90,53 +99,31 @@ $("#sess").change(function() {
 
 //optimize to have another search function that is called when want to search through currently displayed items
 function search(title, pres, dept, sess) {
-	cur_pres = presentations;
-	if (title != "") {
-		for (var i=0; i<cur_pres.length; i++) {
-			if (cur_pres[i]["title"].toLowerCase().indexOf(title.toLowerCase()) < 0) {
-				cur_pres = $.grep(cur_pres, function(value) {
-					return value != cur_pres[i];
-				});
-				i--;
-			}
+	cur_pres = [];
+	var plen = presentations.length;
+	for (var i=0; i<plen; i++) {
+		if (title != "") {
+			if (presentations[i]["title"].toLowerCase().indexOf(title.toLowerCase()) < 0)
+				continue;
 		}
-	}
-	if (pres != "") {
-		for (var i=0; i<cur_pres.length; i++) {
+		if (pres != "") {
 			var flag = 1;
-			for (var j=0; j<cur_pres[i]["members"].length; j++) {
-				if (cur_pres[i]["members"][j].toLowerCase().indexOf(pres.toLowerCase()) >= 0) {
+			for (var j=0; j<presentations[i]["members"].length; j++) {
+				if (presentations[i]["members"][j].toLowerCase().indexOf(pres.toLowerCase()) >= 0)
 					flag = 0;
-				}
 			}
-			if (flag) {
-				cur_pres = $.grep(cur_pres, function(value) {
-					return value != cur_pres[i];
-				});
-				i--;
-			}
+			if (flag)
+				continue;
 		}
-	}
-	if (dept != "none") {
-		for (var i=0; i<cur_pres.length; i++) {
-			if (cur_pres[i]["department"] != dept) {
-				cur_pres = $.grep(cur_pres, function(value) {
-					return value != cur_pres[i];
-				});
-				i--;
-			}
+		if (dept != "none") {
+			if (presentations[i]["department"] != dept)
+				continue;
 		}
-	}
-	if (sess != "none") {
-		for (var i=0; i<cur_pres.length; i++) {
-			var session = session_info[cur_pres[i]["key"]]["session"];
-			if (session != sess) {
-				cur_pres = $.grep(cur_pres, function(value) {
-					return value != cur_pres[i];
-				});
-				i--;
-			}
+		if (sess != "none") {
+			if (session_info[presentations[i]["key"]]["session"] != sess)
+				continue;
 		}
+		cur_pres.push(presentations[i]);
 	}
 	update_results(cur_pres);
 	$("#dept").val(dept);
