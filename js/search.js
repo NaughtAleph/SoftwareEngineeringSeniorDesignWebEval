@@ -4,6 +4,8 @@ var current_pres = [];
 var session_info = {};
 var departments = [];
 var sessions = [];
+var prop = "title";
+var adcending = false;
 
 document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
     function decode(s) {
@@ -24,8 +26,13 @@ $.get('php/get_all_presentations_admin.php', {year: $_GET["year"]}, function(dat
 	session_info = data["sessioninfo"];
 	presentations = data["presentations"];
 	current_pres = presentations;
-	update_results(presentations);
-
+	var plen = presentations.length;
+	for (var i=0; i<plen; i++) {
+		presentations[i]["session"] = session_info[presentations[i]["key"]]["session"];
+		presentations[i]["members"].sort();
+	}
+	current_pres = presentations;
+	sort_results("title", true);
 });
 
 function update_results(results) {
@@ -51,11 +58,13 @@ function update_results(results) {
 		set_download_func(i, results);
 	}
 	
+	departments.sort();
 	var dlen = departments.length;
 	for (var i=0; i<dlen; i++) {
 		var string = $("<div/>").html(departments[i]).text();
 		$("#dept").append("<option value='"+string+"'>"+string+"</option>");
 	}
+	sessions.sort();
 	var slen = sessions.length;
 	for (var i=0; i<slen; i++) {
 		var string = $("<div/>").html(sessions[i]).text();
@@ -65,7 +74,7 @@ function update_results(results) {
 
 function set_download_func(i, results) {
 	$("#download"+i).click(function() {
-		window.location = "php/download.php?year="+$_GET["year"]+"&key="+results[i]["key"]+"&num="+results[i]["number"];
+		window.location = "download.php?year="+$_GET["year"]+"&key="+results[i]["key"]+"&num="+results[i]["number"];
 	});
 }
 
@@ -129,3 +138,31 @@ function search(title, pres, dept, sess) {
 	$("#dept").val(dept);
 	$("#sess").val(sess);
 }
+
+function sort_results(prop, asc) {
+	current_pres = current_pres.sort(function(a,b) {
+		if (asc) {
+			return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
+		} else {
+			return (a[prop] < b[prop]) ? 1 : ((a[prop] > b[prop]) ? -1 : 0);
+		}
+	});
+	ascending = asc;
+	update_results(current_pres);
+}
+
+$("#title_title").click(function () {
+        sort_results("title", !ascending);
+});
+
+$("#title_presenters").click(function () {
+        sort_results("members", !ascending);
+});
+
+$("#title_dept").click(function () {
+        sort_results("department", !ascending);
+});
+
+$("#title_sess").click(function () {
+        sort_results("session", !ascending);
+});

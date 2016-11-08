@@ -4,6 +4,10 @@ var judge = '';
 var scores = [];
 var scoring = ["tec_acc","cre_ino","sup_ana","des_pro","pro_com","exp_com","des_ana","res_qa","org","all_tim","vis_aid","con_poi"];
 
+$("#login").click(function(){
+	window.location.href = "login.html"
+});
+
 function evaluate(clicked) {
 	//$(clicked).css("background","#393");
 	pres = presentations[clicked.id];
@@ -252,7 +256,7 @@ $.get('php/get_session_info.php', function(data) {
 	if (data != "Not logged in") {
 		session_info = JSON.parse(data);
 		$("#session").text(session_info['session'] + " - " + session_info['room']);
-		$("#judge").append("<input type='text' placeholder='Insert Your Name' id='judgename'><button id='name'>Submit</button>");
+		$("#judge").append("<input type='text' class='form-control' placeholder='Insert Your Name' id='judgename'><input id='name' class='btn btn-primary' value='Submit'>");
 
 		$("#name").click(function() {
 			judge = $("#judgename").val();

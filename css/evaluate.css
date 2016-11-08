@@ -1,5 +1,14 @@
 body {
-	background: #b30738;
+	background: #3E4649;
+}
+
+.call-to-action {
+	text-align: center;
+}
+
+.call-to-action p {
+	margin-bottom: 30px;
+	font-family: sans-serif;
 }
 
 .centerbutton {
@@ -7,9 +16,23 @@ body {
 	display: block;
 }
 
+.container {
+	text-align: center;
+}
+
+.dropdown-menu {
+	background: #2E2F31;
+	border-radius: 0;
+	border: 0;
+}
+
+.dropdown-menu li a {
+	padding: 10px;
+}
+
 #errormessage {
 	color: #ccc;
-	
+
 }
 
 #fade {
@@ -21,6 +44,7 @@ body {
 	position: fixed;
 	top: 0;
 	left: 0;
+	display: none;
 }
 
 #final_submit {
@@ -40,11 +64,20 @@ body {
 	left: 50%;
 	margin-left: -350px;
 	margin-bottom: 70px;
+	display: none;
 }
 
 .form_title {
 	font-weight: bold;
 	text-decoration: underline;
+}
+
+.glyphicon-large {
+	font-size: 100px;
+}
+
+h1, h2 {
+	font-weight: bold;
 }
 
 #information {
@@ -55,6 +88,29 @@ body {
 	position: absolute;
 	top: 10px;
 	right: 10px;
+}
+
+.navbar-inverse {
+	background: #2E2F31;
+	border: 0;
+}
+
+.navbar-inverse .navbar-nav li a {
+	color: #f7f7f7;
+	font-size: 16px;
+}
+
+.navbar-inverse .navbar-nav li a:hover {
+	background: #27A967;
+}
+
+.navbar-inverse .navbar-nav .dropdown-menu li a:hover {
+	background: #2C463C;
+}
+
+p {
+	font-size: 16px;
+	color: #cdcdcd;
 }
 
 .pres {
