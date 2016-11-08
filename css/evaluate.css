@@ -1,5 +1,13 @@
 body {
-	background: #b30738;
+	background: #3E4649;
+}
+h1,
+h2 {
+	font-weight: bold;
+}
+p {
+	font-size: 16px;
+	color: #cdcdcd;
 }
 
 .centerbutton {
@@ -9,7 +17,7 @@ body {
 
 #errormessage {
 	color: #ccc;
-	
+
 }
 
 #fade {
@@ -102,4 +110,41 @@ textarea {
 	padding: 1%;
 	width: 98%;
 	border: 0;
+}
+
+.container {
+	text-align: center;
+}
+.navbar-inverse {
+	background: #2E2F31;
+	border: 0;
+}
+.dropdown-menu {
+	background: #2E2F31;
+	border-radius: 0;
+	border: 0;
+}
+.navbar-inverse .navbar-nav li a {
+	color: #f7f7f7;
+	font-size: 16px;
+}
+.navbar-inverse .navbar-nav li a:hover {
+	background: #27A967;
+}
+.navbar-inverse .navbar-nav .dropdown-menu li a:hover {
+	background: #2C463C;
+}
+.dropdown-menu li a {
+	padding: 10px;
+}
+
+.glyphicon-large {
+	font-size: 100px;
+}
+.call-to-action {
+	text-align: center;
+}
+.call-to-action p {
+	margin-bottom: 30px;
+	font-family: sans-serif;
 }

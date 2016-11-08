@@ -252,7 +252,7 @@ $.get('php/get_session_info.php', function(data) {
 	if (data != "Not logged in") {
 		session_info = JSON.parse(data);
 		$("#session").text(session_info['session'] + " - " + session_info['room']);
-		$("#judge").append("<input type='text' placeholder='Insert Your Name' id='judgename'><button id='name'>Submit</button>");
+		$("#judge").append("<input type='text' class='form-control' placeholder='Insert Your Name' id='judgename'><input id='name' class='btn btn-primary' value='Submit'>");
 
 		$("#name").click(function() {
 			judge = $("#judgename").val();

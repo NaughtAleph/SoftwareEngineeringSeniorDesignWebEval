@@ -35,7 +35,7 @@ function update_results(results) {
 	var rlen = results.length;
 	for (var i=0; i<rlen; i++) {
 		$("#search-table").append("<tr id='"+i+"'></tr>");
-		$("#"+i).append("<td id='title"+i+"'></td><td id='presenters"+i+"'></td><td id='dept"+i+"'></td><td id='sess"+i+"'></td><td><button id='download"+i+"' class='centerbutton' id='button"+i+"'>Download</button></td>");
+		$("#"+i).append("<td id='title"+i+"'></td><td id='presenters"+i+"'></td><td id='dept"+i+"'></td><td id='sess"+i+"'></td><td><input id='download"+i+"' class='btn btn-primary' id='button"+i+"' value='Download'></td>");
 		$("#title"+i).text(results[i]['title']);
 		$("#presenters"+i).text(member_string(results[i]["members"]));
 		$("#dept"+i).text(results[i]["department"]);
@@ -50,7 +50,7 @@ function update_results(results) {
 		}
 		set_download_func(i, results);
 	}
-	
+
 	var dlen = departments.length;
 	for (var i=0; i<dlen; i++) {
 		var string = $("<div/>").html(departments[i]).text();
