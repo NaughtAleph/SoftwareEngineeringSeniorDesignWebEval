@@ -1,2 +1,0 @@
-AddType application/php-cgi .php
-Action application/php-cgi /~afattor/cgi-bin/php-cgi.cgi
