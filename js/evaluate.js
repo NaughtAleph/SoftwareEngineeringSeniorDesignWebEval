@@ -30,6 +30,12 @@ function evaluate(clicked) {
 		$("#form").css("left","0")
 		$("#form").css("margin-left","0")
 	}
+	$("#fade").fadeIn("slow", function() {
+                console.log("done");
+        });
+        $("#form").fadeIn("slow", function() {
+                console.log("done");
+        });
 }
 
 $(window).resize(function() {
