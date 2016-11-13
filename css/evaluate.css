@@ -41,7 +41,7 @@ body {
 	z-index: 100;
 	background: #333;
 	opacity: 0.5;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	display: none;
@@ -123,6 +123,7 @@ p {
 	border-style: solid;
 	border-radius: 25px;
 	background: #ccc;
+	cursor: pointer;
 }
 
 .prestitle {

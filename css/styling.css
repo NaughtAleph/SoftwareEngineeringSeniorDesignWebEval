@@ -26,17 +26,17 @@ body {
 	padding: 10px;
 }
 
+#file {
+	display: block;
+	margin: auto;
+}
+
 .glyphicon-large {
 	font-size: 100px;
 }
 
 h1,h2 {
 	font-weight: bold;
-}
-
-#file {
-	display: block;
-	margin: auto;
 }
 
 .navbar-inverse {

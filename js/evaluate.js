@@ -31,10 +31,10 @@ function evaluate(clicked) {
 		$("#form").css("margin-left","0")
 	}
 	$("#fade").fadeIn("slow", function() {
-		console.log("done");
+		//console.log("done");
 	});
 	$("#form").fadeIn("slow", function() {
-		console.log("done");
+		//console.log("done");
 	});
 }
 
@@ -183,7 +183,6 @@ function populate_form(clicked) {
 		"<td><input type='radio' name='con_poi' value='4' />4</td>"+
 		"<td><input type='radio' name='con_poi' value='5' />5</td></tr></table>");
 
-
 	$("#input").append("<div>Please check each of the following considerations that were addressed in the presentation:</div>");
 	$("#input").append("<div><input type='checkbox' name='addressed' value='econ' />Economic</div>");
 	$("#input").append("<div><input type='checkbox' name='addressed' value='envi' />Environmental</div>");
@@ -193,7 +192,7 @@ function populate_form(clicked) {
 	$("#input").append("<div><input type='checkbox' name='addressed' value='hands' />Health and Safety</div>");
 	$("#input").append("<div><input type='checkbox' name='addressed' value='soci' />Social</div>");
 	$("#input").append("<div><input type='checkbox' name='addressed' value='poli' />Political</div>");
-	$("#input").append("<div><textarea id='comments' placeholder='Additional comments (Optional)' /></div>");
+	$("#input").append("<div><textarea class='form-control' id='comments' placeholder='Additional comments (Optional)' rows='4'/></div><br>");
 	$("#input").append("<button id='submit'>Submit</button><button id='cancel'>Cancel</button>");
 	$("#submit").click(function() {save_form(clicked);});
 	$("#cancel").click(function() {cancel_form();});
@@ -271,13 +270,15 @@ $.get('php/get_session_info.php', function(data) {
 					window.location = "index.html";
 				if (data == "no") {
 					$("#judge").html("");
-					$("#judge").text(judge);
+					$("#judge").append("<h3 id='judgename' class='title'></h3>");
+					$("#judgename").text(judge);
 					get_pres();
 				} else if (data == "yes") {
 					var check = confirm("Your name is already in the system. Perhaps you've already submitted scores?\nIf you would like to continue, overwriting your previous submitted scores, press OK.\nOtherwise, please press cancel and give a different name.")
 					if (check) {
 						$("#judge").html("");
-						$("#judge").text(judge);
+						$("#judge").append("<h3 id='judgename' class='title'></h3>");
+						$("#judgename").text(judge);
 						get_pres();
 					} else {
 						$("#judgename").val("");
@@ -316,11 +317,16 @@ function get_pres() {
 			if (mlen > 1)
 				members_string += " and " + members[mlen-1];
 			$("#"+parseInt(i)).append("<div class='members'>Presenters: "+members_string+"</div>");
+			$("#"+parseInt(i)).hover(function(){
+				$(this).css("background", "white");
+				}, function(){
+				$(this).css("background", "#ccc");
+			});
 			$("#"+parseInt(i)).click(function() {
 				evaluate(this);
 			});
 		}
-		$("body").append("<button id='final_submit'>Submit</button>");
+		$("body").append("<button id='final_submit' class='btn btn-primary'>Submit</button>");
 		$("#final_submit").click(function() {
 			var conf = confirm("Are you sure you want to submit?\nIf you submit any other scores under your same name, they will overwite these ones.");
 			if (conf) {
