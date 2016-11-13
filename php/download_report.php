@@ -56,7 +56,7 @@
 		}
 		
 		exec('zip reports.zip reports/*');
-		header("Content-Type: application/octec-stream");
+		header("Content-Type: application/octet-stream");
 		header("Content-Transfer-Encoding: Binary");
 		header("Content-disposition: attachment; filename=\"reports.zip\"");
 		readfile('reports.zip');

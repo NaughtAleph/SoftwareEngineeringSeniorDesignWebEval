@@ -28,7 +28,17 @@
 		if (!file_exists("secrets/".date("Y")))
 			mkdir("secrets/".date("Y"), 0700);
 		file_put_contents("secrets/".date("Y")."/sessionkeys.json",json_encode($tf));
+		$string = "Session,Key";
+		foreach ($keys as $k=>$v) {
+			$string = $string."\n".$k.",".$v;
+		}
+		file_put_contents("secrets/".date("Y")."/keys.csv", $string);
 		echo json_encode($keys);
+		//header("Content-Type: application/octet-stream");
+		//header("Content-Transfer-Encoding: Binary");
+		//header("Content-disposition: attachment; filename=\"secrets/".date("Y")."/keys.csv\"");
+		//readfile('secrets/'.date("Y").'/keys.csv');
+		//unlink('secrets/'.date("Y").'/keys.csv');
 	} else {
 		die("die");
 	}

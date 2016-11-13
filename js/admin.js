@@ -58,6 +58,9 @@ function upload_worksheet(worksheet) {
 			sessions.push(ses);
 	}
 	$.get("php/get_keys.php", {num:sessions.length, s: sessions}, function(data) {
+		//$.get("php/download_keys.php",{data: data}, function(data) {
+		//	console.log(data);	
+		//});
 		console.log(data);
 		if (data == "die") {
 			alert("Something went wrong. Try again");
