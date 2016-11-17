@@ -96,104 +96,104 @@ function populate_info(clicked) {
 function populate_form(clicked) {
 	$("#input").append("<div class='form_title'>Design Project</div>");
 	$("#input").append("<div id='des_proj'></div>");
-	$("#des_proj").append("<table><tr><td class='category'>Technical Accuracy</td>"+
-		"<td><input type='radio' name='tec_acc' value='N/A' checked='checked' />N/A</td>"+
-		"<td><input type='radio' name='tec_acc' value='1' />1</td>"+
-		"<td><input type='radio' name='tec_acc' value='2' />2</td>"+
-		"<td><input type='radio' name='tec_acc' value='3' />3</td>"+
-		"<td><input type='radio' name='tec_acc' value='4' />4</td>"+
-		"<td><input type='radio' name='tec_acc' value='5' />5</td></tr>"+
-	"<tr><td class='category'>Creativity and Innovation</td>"+
-		"<td><input type='radio' name='cre_ino' value='N/A' checked='checked' />N/A</td>"+
-		"<td><input type='radio' name='cre_ino' value='1' />1</td>"+
-		"<td><input type='radio' name='cre_ino' value='2' />2</td>"+
-		"<td><input type='radio' name='cre_ino' value='3' />3</td>"+
-		"<td><input type='radio' name='cre_ino' value='4' />4</td>"+
-		"<td><input type='radio' name='cre_ino' value='5' />5</td></tr>"+
-	"<tr><td class='category'>Supporting Analytical Work</td>"+
-		"<td><input type='radio' name='sup_ana' value='N/A' checked='checked' />N/A</td>"+
-		"<td><input type='radio' name='sup_ana' value='1' />1</td>"+
-		"<td><input type='radio' name='sup_ana' value='2' />2</td>"+
-		"<td><input type='radio' name='sup_ana' value='3' />3</td>"+
-		"<td><input type='radio' name='sup_ana' value='4' />4</td>"+
-		"<td><input type='radio' name='sup_ana' value='5' />5</td></tr>"+
-	"<tr><td class='category'>Methodical Design Process Demonstrated</td>"+
-		"<td><input type='radio' name='des_pro' value='N/A' checked='checked' />N/A</td>"+
-		"<td><input type='radio' name='des_pro' value='1' />1</td>"+
-		"<td><input type='radio' name='des_pro' value='2' />2</td>"+
-		"<td><input type='radio' name='des_pro' value='3' />3</td>"+
-		"<td><input type='radio' name='des_pro' value='4' />4</td>"+
-		"<td><input type='radio' name='des_pro' value='5' />5</td></tr>"+
-	"<tr><td class='category'>Addresses Project Complexity Appropriately</td>"+
-		"<td><input type='radio' name='pro_com' value='N/A' checked='checked' />N/A</td>"+
-		"<td><input type='radio' name='pro_com' value='1' />1</td>"+
-		"<td><input type='radio' name='pro_com' value='2' />2</td>"+
-		"<td><input type='radio' name='pro_com' value='3' />3</td>"+
-		"<td><input type='radio' name='pro_com' value='4' />4</td>"+
-		"<td><input type='radio' name='pro_com' value='5' />5</td></tr>"+
-	"<tr><td class='category'>Expectation of Completion (by term's end)</td>"+
-		"<td><input type='radio' name='exp_com' value='N/A' checked='checked' />N/A</td>"+
-		"<td><input type='radio' name='exp_com' value='1' />1</td>"+
-		"<td><input type='radio' name='exp_com' value='2' />2</td>"+
-		"<td><input type='radio' name='exp_com' value='3' />3</td>"+
-		"<td><input type='radio' name='exp_com' value='4' />4</td>"+
-		"<td><input type='radio' name='exp_com' value='5' />5</td></tr>"+
-	"<tr><td class='category'>Design and Analysis of Tests</td>"+
-		"<td><input type='radio' name='des_ana' value='N/A' checked='checked' />N/A</td>"+
-		"<td><input type='radio' name='des_ana' value='1' />1</td>"+
-		"<td><input type='radio' name='des_ana' value='2' />2</td>"+
-		"<td><input type='radio' name='des_ana' value='3' />3</td>"+
-		"<td><input type='radio' name='des_ana' value='4' />4</td>"+
-		"<td><input type='radio' name='des_ana' value='5' />5</td></tr>"+
-	"<tr><td class='category'>Quality of Response During Q&A</td>"+
-		"<td><input type='radio' name='res_qa' value='N/A' checked='checked' />N/A</td>"+
-		"<td><input type='radio' name='res_qa' value='1' />1</td>"+
-		"<td><input type='radio' name='res_qa' value='2' />2</td>"+
-		"<td><input type='radio' name='res_qa' value='3' />3</td>"+
-		"<td><input type='radio' name='res_qa' value='4' />4</td>"+
-		"<td><input type='radio' name='res_qa' value='5' />5</td></tr></table>");
-	$("#input").append("<div class='form_title'>Presentation</div>");
+	$("#des_proj").append("<table><tr><td class='category'>Technical Accuracy &nbsp;</td>"+
+		"<td><input type='radio' name='tec_acc' value='N/A' checked='checked' />&nbsp; N/A &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='tec_acc' value='1' />&nbsp; 1 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='tec_acc' value='2' />&nbsp; 2 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='tec_acc' value='3' />&nbsp; 3 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='tec_acc' value='4' />&nbsp; 4 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='tec_acc' value='5' />&nbsp; 5 &nbsp;&nbsp;</td></tr>"+
+	"<tr><td class='category'>Creativity and Innovation &nbsp;</td>"+
+		"<td><input type='radio' name='cre_ino' value='N/A' checked='checked' />&nbsp; N/A &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='cre_ino' value='1' />&nbsp; 1 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='cre_ino' value='2' />&nbsp; 2 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='cre_ino' value='3' />&nbsp; 3 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='cre_ino' value='4' />&nbsp; 4 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='cre_ino' value='5' />&nbsp; 5 &nbsp;&nbsp;</td></tr>"+
+	"<tr><td class='category'>Supporting Analytical Work &nbsp;</td>"+
+		"<td><input type='radio' name='sup_ana' value='N/A' checked='checked' />&nbsp; N/A &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='sup_ana' value='1' />&nbsp; 1 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='sup_ana' value='2' />&nbsp; 2 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='sup_ana' value='3' />&nbsp; 3 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='sup_ana' value='4' />&nbsp; 4 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='sup_ana' value='5' />&nbsp; 5 &nbsp;&nbsp;</td></tr>"+
+	"<tr><td class='category'>Methodical Design Process Demonstrated &nbsp;</td>"+
+		"<td><input type='radio' name='des_pro' value='N/A' checked='checked' />&nbsp; N/A &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='des_pro' value='1' />&nbsp; 1 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='des_pro' value='2' />&nbsp; 2 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='des_pro' value='3' />&nbsp; 3 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='des_pro' value='4' />&nbsp; 4 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='des_pro' value='5' />&nbsp; 5 &nbsp;&nbsp;</td></tr>"+
+	"<tr><td class='category'>Addresses Project Complexity Appropriately &nbsp;</td>"+
+		"<td><input type='radio' name='pro_com' value='N/A' checked='checked' />&nbsp; N/A &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='pro_com' value='1' />&nbsp; 1 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='pro_com' value='2' />&nbsp; 2 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='pro_com' value='3' />&nbsp; 3 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='pro_com' value='4' />&nbsp; 4 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='pro_com' value='5' />&nbsp; 5 &nbsp;&nbsp;</td></tr>"+
+	"<tr><td class='category'>Expectation of Completion (by term's end) &nbsp;</td>"+
+		"<td><input type='radio' name='exp_com' value='N/A' checked='checked' />&nbsp; N/A &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='exp_com' value='1' />&nbsp; 1 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='exp_com' value='2' />&nbsp; 2 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='exp_com' value='3' />&nbsp; 3 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='exp_com' value='4' />&nbsp; 4 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='exp_com' value='5' />&nbsp; 5 &nbsp;&nbsp;</td></tr>"+
+	"<tr><td class='category'>Design and Analysis of Tests &nbsp;</td>"+
+		"<td><input type='radio' name='des_ana' value='N/A' checked='checked' />&nbsp; N/A &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='des_ana' value='1' />&nbsp; 1 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='des_ana' value='2' />&nbsp; 2 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='des_ana' value='3' />&nbsp; 3 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='des_ana' value='4' />&nbsp; 4 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='des_ana' value='5' />&nbsp; 5 &nbsp;&nbsp;</td></tr>"+
+	"<tr><td class='category'>Quality of Response During Q&A &nbsp;</td>"+
+		"<td><input type='radio' name='res_qa' value='N/A' checked='checked' />&nbsp; N/A &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='res_qa' value='1' />&nbsp; 1 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='res_qa' value='2' />&nbsp; 2 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='res_qa' value='3' />&nbsp; 3 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='res_qa' value='4' />&nbsp; 4 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='res_qa' value='5' />&nbsp; 5 &nbsp;&nbsp;</td></tr></table>");
+	$("#input").append("<br><div class='form_title'>Presentation</div>");
 	$("#input").append("<div id='pres'></div>");
-	$("#pres").append("<table><tr><td class='category'>Organization</td>"+
-		"<td><input type='radio' name='org' value='N/A' checked='checked' />N/A</td>"+
-		"<td><input type='radio' name='org' value='1' />1</td>"+
-		"<td><input type='radio' name='org' value='2' />2</td>"+
-		"<td><input type='radio' name='org' value='3' />3</td>"+
-		"<td><input type='radio' name='org' value='4' />4</td>"+
-		"<td><input type='radio' name='org' value='5' />5</td></tr>"+
-	"<tr><td class='category'>Use of Allotted Time</td>"+
-		"<td><input type='radio' name='all_tim' value='N/A' checked='checked' />N/A</td>"+
-		"<td><input type='radio' name='all_tim' value='1' />1</td>"+
-		"<td><input type='radio' name='all_tim' value='2' />2</td>"+
-		"<td><input type='radio' name='all_tim' value='3' />3</td>"+
-		"<td><input type='radio' name='all_tim' value='4' />4</td>"+
-		"<td><input type='radio' name='all_tim' value='5' />5</td></tr>"+
-	"<tr><td class='category'>Visual Aids</td>"+
-		"<td><input type='radio' name='vis_aid' value='N/A' checked='checked' />N/A</td>"+
-		"<td><input type='radio' name='vis_aid' value='1' />1</td>"+
-		"<td><input type='radio' name='vis_aid' value='2' />2</td>"+
-		"<td><input type='radio' name='vis_aid' value='3' />3</td>"+
-		"<td><input type='radio' name='vis_aid' value='4' />4</td>"+
-		"<td><input type='radio' name='vis_aid' value='5' />5</td></tr>"+
-	"<tr><td class='category'>Confdence and Poise</td>"+
-		"<td><input type='radio' name='con_poi' value='N/A' checked='checked' />N/A</td>"+
-		"<td><input type='radio' name='con_poi' value='1' />1</td>"+
-		"<td><input type='radio' name='con_poi' value='2' />2</td>"+
-		"<td><input type='radio' name='con_poi' value='3' />3</td>"+
-		"<td><input type='radio' name='con_poi' value='4' />4</td>"+
-		"<td><input type='radio' name='con_poi' value='5' />5</td></tr></table>");
+	$("#pres").append("<table><tr><td class='category'>Organization &nbsp;</td>"+
+		"<td><input type='radio' name='org' value='N/A' checked='checked' />&nbsp; N/A &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='org' value='1' />&nbsp; 1 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='org' value='2' />&nbsp; 2 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='org' value='3' />&nbsp; 3 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='org' value='4' />&nbsp; 4 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='org' value='5' />&nbsp; 5 &nbsp;&nbsp;</td></tr>"+
+	"<tr><td class='category'>Use of Allotted Time &nbsp;</td>"+
+		"<td><input type='radio' name='all_tim' value='N/A' checked='checked' />&nbsp; N/A &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='all_tim' value='1' />&nbsp; 1 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='all_tim' value='2' />&nbsp; 2 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='all_tim' value='3' />&nbsp; 3 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='all_tim' value='4' />&nbsp; 4 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='all_tim' value='5' />&nbsp; 5 &nbsp;&nbsp;</td></tr>"+
+	"<tr><td class='category'>Visual Aids &nbsp;</td>"+
+		"<td><input type='radio' name='vis_aid' value='N/A' checked='checked' />&nbsp; N/A &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='vis_aid' value='1' />&nbsp; 1 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='vis_aid' value='2' />&nbsp; 2 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='vis_aid' value='3' />&nbsp; 3 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='vis_aid' value='4' />&nbsp; 4 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='vis_aid' value='5' />&nbsp; 5 &nbsp;&nbsp;</td></tr>"+
+	"<tr><td class='category'>Confdence and Poise &nbsp;</td>"+
+		"<td><input type='radio' name='con_poi' value='N/A' checked='checked' />&nbsp; N/A &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='con_poi' value='1' />&nbsp; 1 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='con_poi' value='2' />&nbsp; 2 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='con_poi' value='3' />&nbsp; 3 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='con_poi' value='4' />&nbsp; 4 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='con_poi' value='5' />&nbsp; 5 &nbsp;&nbsp;</td></tr></table>");
 
-	$("#input").append("<div>Please check each of the following considerations that were addressed in the presentation:</div>");
-	$("#input").append("<div><input type='checkbox' name='addressed' value='econ' />Economic</div>");
-	$("#input").append("<div><input type='checkbox' name='addressed' value='envi' />Environmental</div>");
-	$("#input").append("<div><input type='checkbox' name='addressed' value='sust' />Sustainability</div>");
-	$("#input").append("<div><input type='checkbox' name='addressed' value='manu' />Manufactuability</div>");
-	$("#input").append("<div><input type='checkbox' name='addressed' value='ethi' />Ethical</div>");
-	$("#input").append("<div><input type='checkbox' name='addressed' value='hands' />Health and Safety</div>");
-	$("#input").append("<div><input type='checkbox' name='addressed' value='soci' />Social</div>");
-	$("#input").append("<div><input type='checkbox' name='addressed' value='poli' />Political</div>");
+	$("#input").append("<br><div>Please check each of the following considerations that were addressed in the presentation:</div>");
+	$("#input").append("<div><input type='checkbox' name='addressed' value='econ' />&nbsp; Economic</div>");
+	$("#input").append("<div><input type='checkbox' name='addressed' value='envi' />&nbsp; Environmental</div>");
+	$("#input").append("<div><input type='checkbox' name='addressed' value='sust' />&nbsp; Sustainability</div>");
+	$("#input").append("<div><input type='checkbox' name='addressed' value='manu' />&nbsp; Manufactuability</div>");
+	$("#input").append("<div><input type='checkbox' name='addressed' value='ethi' />&nbsp; Ethical</div>");
+	$("#input").append("<div><input type='checkbox' name='addressed' value='hands' />&nbsp; Health and Safety</div>");
+	$("#input").append("<div><input type='checkbox' name='addressed' value='soci' />&nbsp; Social</div>");
+	$("#input").append("<div><input type='checkbox' name='addressed' value='poli' />&nbsp; Political</div><br>");
 	$("#input").append("<div><textarea class='form-control' id='comments' placeholder='Additional comments (Optional)' rows='4'/></div><br>");
-	$("#input").append("<button id='submit'>Submit</button><button id='cancel'>Cancel</button>");
+	$("#input").append("<input id='submit' class='btn btn-primary' value='Submit' /><input id='cancel' class='btn btn-default' value='Discard' />");
 	$("#submit").click(function() {save_form(clicked);});
 	$("#cancel").click(function() {cancel_form();});
 	for (var i=0; i<scoring.length; i++) {
@@ -233,10 +233,7 @@ function cancel_form() {
 function check_scores() {
 	return;
 	//TODO
-	console.log(scores);
 	for (var i=0; i<scores.length; i++) {
-		if ($.inArray(NaN, scores[i]))
-			console.log(true);
 		var flag = false;
 		for (var j=0; j<scores[i].length; j++) {
 			if (isNaN(scores[i][j])) {
@@ -245,7 +242,6 @@ function check_scores() {
 			}
 		}
 		if (flag) {
-			console.log(i);
 			$("#"+i).css("background","f00");
 		} else {
 			$("#"+i).css("background","393");
@@ -258,7 +254,7 @@ $.get('php/check_session.php', function(data) {
 });
 
 $.get('php/get_session_info.php', function(data) {
-	if (data != "Not logged in") {
+	if (data != "Not logged in" && data!= '') {
 		session_info = JSON.parse(data);
 		$("#session").text(session_info['session'] + " - " + session_info['room']);
 		$("#judge").append("<input type='text' class='form-control' placeholder='Insert Your Name' id='judgename' autofocus><input id='name' class='btn btn-primary' value='Submit'>");

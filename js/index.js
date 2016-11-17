@@ -1,5 +1,5 @@
 $("#login").click(function(){
-	window.location.href = "login.html"
+	window.location = "login.html"
 });
 
 $.get('php/check_session.php', function(data) {

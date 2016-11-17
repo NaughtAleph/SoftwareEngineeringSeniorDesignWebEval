@@ -82,7 +82,6 @@
 		preg_match("/_(.*)/", $base, $matches);
 		array_push($names, $matches[1]);
 	}
-	echo "<script>console.log(".json_encode($names).");</script>";
 	$values = [[],[],[],[],[],[],[],[],[],[],[],[]];
 	$totals = [];
 	$considerations = [];

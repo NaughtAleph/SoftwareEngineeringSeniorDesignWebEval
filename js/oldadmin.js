@@ -30,41 +30,20 @@ $("#upload_file").click(function() {
 	reader.onload = function() {
 		var data = reader.result;
 		var workbook = XLSX.read(data, {type: 'binary'});
-		upload_worksheet(workbook.Sheets.export);
+		upload_worksheet(workbook.Sheets.Sheet1);
 	}
 	reader.readAsBinaryString(file);
 });
 
 function upload_worksheet(worksheet) {
 	var row = {	"A":"title",
-			"B":"description",
-			"C":"session",
-			"E":"location",
-			"F":"department",
-			"G":"num_members",
-			"I":"mem1_first",
-			"J":"mem1_last",
-			"N":"mem2_first",
-			"O":"mem2_last",
-			"S":"mem3_first",
-			"T":"mem3_last",
-			"X":"mem4_first",
-			"Y":"mem4_last",
-			"AC":"mem5_first",
-			"AD":"mem5_last",
-			"AH":"mem6_first",
-			"AI":"mem6_last",
-			"AU":"advisor1",
-			"AW":"advisor2",
-	};
-	var mem_loc = [
-		["I","J"],
-		["N","O"],
-		["S","T"],
-		["X","Y"],
-		["AC","AD"],
-		["AH","AI"]
-	]
+			"B":"members",
+			"C":"description",
+			"D":"advisors",
+			"E":"department",
+			"F":"session",
+			"G":"room",
+			"H":"number"};
 	var presentations = [];
 	var keys = [];
 	for (var key in worksheet) {
@@ -74,7 +53,7 @@ function upload_worksheet(worksheet) {
 	var r = range(2, parseInt(keys[keys.length-1].match(/\d+/)[0])+1);
 	var sessions = [];
 	for (var i in r) {
-		var ses = worksheet["C"+r[i]].v;
+		var ses = worksheet["F"+r[i]].v;
 		if ($.inArray(ses, sessions) < 0)
 			sessions.push(ses);
 	}
@@ -89,52 +68,26 @@ function upload_worksheet(worksheet) {
 		var keys = $.parseJSON(data);
 		var keys_c = $.parseJSON(data);
 		var sess_info = {};
-		
-		var number = 0;
-		var previous = "0";
-		r = range(2, parseInt(worksheet["!ref"].match(/\d+/g)[1]));
 		for (var i in r) {
-			var key = worksheet["C"+r[i]].v;
+			var key = worksheet["F"+r[i]].v;
 			var val = keys[key];
-			var members = [];
-			for (j in range(0,worksheet["G"+r[i]].v)) {
-				members.push(worksheet[mem_loc[j][0]+r[i]].v + " " + worksheet[mem_loc[j][1]+r[i]].v);
-			}
-			var advisors = [];
-			if ("AU"+r[i] in worksheet)
-				advisors.push(worksheet["AU"+r[i]].v);
-			if ("AW"+r[i] in worksheet)
-				advisors.push(worksheet["AW"+r[i]].v);
-			console.log(worksheet["D"+r[i]].v);
-			console.log(previous);
-			console.log(previous < worksheet["D"+r[i]].v)
-			
-			if (previous < worksheet["D"+r[i]].v) {
-				previous = worksheet["D"+r[i]].v;
-				number++;
-			} else {
-				previous = "0";
-				number = 1;
-				console.log(r[i]);
-			}
-			console.log(number);
 			presentations.push({
 				"title":worksheet["A"+r[i]].v,
-				"members":members,
-				"advisors":advisors,
-				"department":worksheet["F"+r[i]].v,
-				"number":number,
+				"members":worksheet["B"+r[i]].v.split(/ *, */),
+				"advisors":worksheet["D"+r[i]].v.split(/ *, */),
+				"department":worksheet["E"+r[i]].v,
+				"number":worksheet["H"+r[i]].v,
 				"key":val
 			});
 			if (key in keys_c) {
 				sess_info[val] = {
 					"session":key,
-					"room":worksheet["E"+r[i]].v
+					"room":worksheet["G"+r[i]].v
 				}
 				delete keys_c[key]
 			}
 		}
-		$.post("php/set_presentations.php", {data:'{"presentations":'+JSON.stringify(presentations)+',"sessioninfo":'+JSON.stringify(sess_info)+"}"}, function(data) {
+		$.get("php/set_presentations.php", {data:'{"presentations":'+JSON.stringify(presentations)+',"sessioninfo":'+JSON.stringify(sess_info)+"}"}, function(data) {
 			alert("File uploaded Successfully!");
 		});
 	});

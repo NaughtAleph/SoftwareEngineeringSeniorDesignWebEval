@@ -3,3 +3,7 @@ $.get('php/check_login.php', function(data) {
 		$("#errormessage").html("Invalid login");
 	}
 });
+
+$("#return").click(function() {
+	window.location = "index.html";
+});

@@ -5,7 +5,6 @@
 		header("Content-Transfer-Encoding: Binary");
 		header("Content-disposition: attachment; filename=\"secrets/".date("Y")."/keys.csv\"");
 		readfile('secrets/'.date("Y").'/keys.csv');
-		unlink('secrets/'.date("Y").'/keys.csv');
 	} else {
 		die("die");
 	}

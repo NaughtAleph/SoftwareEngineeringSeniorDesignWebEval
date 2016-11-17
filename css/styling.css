@@ -12,6 +12,10 @@ body {
 	font-family: sans-serif;
 }
 
+.col-md-6 {
+	height: 150px;
+}
+
 .container {
 	text-align: center;
 }
@@ -29,6 +33,10 @@ body {
 #file {
 	display: block;
 	margin: auto;
+}
+
+.form-control {
+	margin: auto
 }
 
 .glyphicon-large {
