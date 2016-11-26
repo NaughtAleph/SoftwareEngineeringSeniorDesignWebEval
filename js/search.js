@@ -15,6 +15,10 @@ document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
     $_GET[decode(arguments[1])] = decode(arguments[2]);
 });
 
+$("#Back").click(function() {
+	window.location = "admin.html";
+});
+
 $.get('php/check_login.php', function(data) {
 	if (data == "new" || data == "no") window.location = "login.html";
 });
