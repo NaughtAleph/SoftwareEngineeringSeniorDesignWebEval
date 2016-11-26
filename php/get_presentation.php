@@ -1,13 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<meta charset="UTF-8" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	<link href="css/bootstrap.min.css" rel="stylesheet" />
-	<link href="css/formtemplate.css" rel="stylesheet" />
-</head>
-<body>
 <?php
 	$consider_keys = [
 		"econ" => "Economic",
@@ -33,7 +23,7 @@
 		return $arr_str;
 	}
 
-	$years = scandir("php/scores");
+	$years = scandir("scores");
 
 
 	session_start();
@@ -52,7 +42,7 @@
 		
 
 
-	$presentations = file_get_contents("php/secrets/".$year."/presentations.json");
+	$presentations = file_get_contents("secrets/".$year."/presentations.json");
 	$presentations = json_decode($presentations);
 	$sessions = $presentations->sessioninfo;
 	$presentations = $presentations->presentations;
@@ -70,7 +60,7 @@
 
 
 
-	$files = glob("php/scores/".$year."/".$key."*");
+	$files = glob("scores/".$year."/".$key."*");
 	$scores = [];
 	$names = [];
 	foreach ($files as $f) {
@@ -93,10 +83,16 @@
 			header("Location: search.html?year=".$year);
 		$total = 0;
 		foreach ($s[$num-1]->values as $n=>$v) {
+			if ($v == null) $v = "unscored";
 			array_push($values[$n], $v);
 			$total += $v;
 		}
-		array_push($considerations, $s[$num-1]->considerations);
+		$c = [];
+		foreach ($s[$num-1]->considerations as $x) {
+			array_push($c, $consider_keys[$x]);
+		}
+		array_push($considerations, $c);
+		//array_push($considerations, $s[$num-1]->considerations);
 //		foreach ($s[$num-1]->considerations as $c) {
 //			if (!in_array($c, $considerations))
 //				array_push($considerations, $c);
@@ -108,6 +104,22 @@
 	$mem_str = form_string($pres->members);
 	$ad_str = form_string($pres->advisors);
 	$finalcombo = array_combine($names, $comments);
+	
+
+
+	$return = [];
+	$return["session"] = $sess->session;
+	$return["room"] = $sess->room;
+	$return["title"] = $pres->title;
+	$return["members"] = $mem_str;
+	$return["advisors"] = $ad_str;
+	$return["judges"] = $names;
+	$return["scores"] = $values;
+	$return["totals"] = $totals;
+	$return["considerations"] = $considerations;
+	$return["comments"] = $comments;
+	echo json_encode($return);
+	die;
 ?>
 <div class="container" style="font-size: 20px">
 	<div class="row">

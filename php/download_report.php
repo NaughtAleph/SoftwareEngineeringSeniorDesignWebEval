@@ -27,8 +27,17 @@
 			foreach ($files as $f) {
 				$contents = file_get_contents($f);
 				$contents = json_decode($contents);
+				$nullflag = false;
+				foreach ($contents as $c) {
+					if (in_array(null, $c->values, true)) {
+						$nullflag = true;
+						break;
+					}
+				}
+				if ($nullflag) continue;
 				array_push($scores, $contents);
 			}
+			if ($scores == []) continue;
 			//echo json_encode($scores);
 			//echo "\nAAAAAAAAAAHHHHHHHHHH\n";
 			//echo json_encode($keys);;
@@ -36,13 +45,30 @@
 			//echo json_encode($presentations);
 			foreach ($presentations as $p) {
 				if ($p->key == $k) {
-					$output = ["","","","","","","","","","","",""];
+					$output = [	"Technical Accuracy",
+							"Creativity and Innovation",
+							"Supporting Analytical Work",
+							"Methodical Design Process",
+							"Addresses Project Complecity Appropriately",
+							"Expectation of Completion",
+							"Design & Analysis of Tests",
+							"Quality of Response During Q&A",
+							"Organization",
+							"Use of Allotted Time",
+							"Visual Aids",
+							"Confidence and Poise",
+							"Total"
+						];
 					$ref = $output;
 					$num = intval($p->number);
 					foreach ($scores as $s) {
+						$total = 0;
 						foreach ($s[$num-1]->values as $n=>$v) {
-							$output[$n] = $output[$n].$v.",";
+							$output[$n] = $output[$n].",".$v;
+							if ($v == "N/A") continue;
+							$total = $total + intval($v);
 						}
+						$output[12] = $output[12].",".$total;
 						
 					}
 					if ($output == $ref) continue;

@@ -74,8 +74,216 @@ function update_results(results) {
 
 function set_download_func(i, results) {
 	$("#download"+i).click(function() {
-		window.location = "download.php?year="+$_GET["year"]+"&key="+results[i]["key"]+"&num="+results[i]["number"];
+		$.get("php/get_presentation.php",
+			{year:$_GET["year"],key:results[i]["key"], num:results[i]["number"]},
+			function(data) {
+				var doc = generate_pdf(data);
+				doc.save($("#title"+i).text());
+			});
+		return;
+		window.open("download.php?year="+$_GET["year"]+"&key="+results[i]["key"]+"&num="+results[i]["number"], '_blank');
+		return;
+
+/*		var doc = new jsPDF();
+		doc.text(20,20,'This PDF has a title, subject, author, keywords, and a creator. So good luck with that shit. It also has a really long line that I hope will wrap around');
+		doc.setProperties({
+			title: 'Title',
+			subject: 'This is the subject',
+			author: 'My name',
+			creator: 'jspdf'
+		});
+		doc.save('Test.pdf');
+		return;
+*/
+//		window.location = "download.php?year="+$_GET["year"]+"&key="+results[i]["key"]+"&num="+results[i]["number"];
+//		return;
+		$.get("download.php", {year:$_GET["year"], key:results[i]["key"], num:results[i]["number"]}, function(data) {
+		var pdf = new jsPDF('p', 'in', 'letter');
+		var parser = new DOMParser();
+		var d = parser.parseFromString(data, "text/html");
+		//console.log(d.childNodes[1].childNodes[2]);
+		console.log(d);
+		console.log(typeof data);
+		console.log(data);
+		console.log(typeof $(data)[11]);
+		for (var p in $(data)[11]) {
+			if (typeof $(data)[11][p] === "function") {
+				console.log(p);
+			}
+		}
+		console.log($(data)[11].toString());
+		return;
+		html2pdf(d.childNodes[1].childNodes[2], pdf, function(finishedpdf) {
+			finishedpdf.save('Testing.pdf');
+		});
+		return;
+			var pdf = new jsPDF('p', 'in', 'letter');
+			specialElementHandlers = {
+				'#bypassme':function(element, renderer) {
+					return true;
+				}
+			};
+			margins = {
+				top: 0.5,
+				bottom: 0.5,
+				left: 0.5,
+				width: 7.5
+			};
+			pdf.fromHTML(
+				data,
+				margins.left,
+				margins.top, {
+					'width':margins.width,
+					'elementHandlers': specialElementHandlers
+				}, function(dispose) {
+					pdf.save('Test.pdf');
+				});
+		});
 	});
+}
+
+function generate_pdf(data) {
+	data = JSON.parse(data);
+	console.log(data);
+	var doc = new jsPDF();
+	doc.setFontSize(12);
+	doc.setFont("times");
+	doc.setFontType("bold");
+	var pwidth = doc.internal.pageSize.width;
+	var cur_line = 20;
+	var lines = "";
+
+	/* PREAMBLE */
+	doc.text("Santa Clara University", pwidth/2, cur_line+=5, 'center');
+	doc.text("School of Engineering Senior Design Conference Project", pwidth/2, cur_line+=5, 'center');
+	doc.text("PROJECT EVALUATION FORM", pwidth/2, cur_line+=7.5, 'center');
+	doc.text("Session:", 15, cur_line+=7.5).setFontType("normal").text(data["session"], 50, cur_line).setFontType("bold");
+	doc.text("Room #:", 15, cur_line+=5).setFontType("normal").text(data["room"], 50, cur_line).setFontType("bold");
+	doc.text("Project Title:", 15, cur_line+=7.5).setFontType("normal");//.text(data["title"], 50, cur_line).setFontType("bold");
+		line = doc.splitTextToSize(data["title"], pwidth-65);
+		doc.text(line, 50, cur_line).setFontType("bold");
+		cur_line += 5 * (line.length - 1);
+	doc.text("Group Members:", 15, cur_line+=5).setFontType("normal");//.text(data["members"], 50, cur_line).setFontType("bold");
+		line = doc.splitTextToSize(data["members"], pwidth-65);
+		doc.text(line, 50, cur_line).setFontType("bold");
+		cur_line += 5 * (line.length - 1);
+	doc.text("Advisors:", 15, cur_line+=5).setFontType("normal");//.text(data["advisors"], 50, cur_line).setFontType("bold");
+		line = doc.splitTextToSize(data["advisors"], pwidth-65);
+		doc.text(line, 50, cur_line).setFontType("bold");
+		cur_line += 5 * (line.length - 1);
+	doc.text("Senior engineering design projects and presentations are evaluated with the following system:", 15, cur_line+=12.5);
+	doc.setFontType("normal");
+	doc.text("5 = Excellent (at the level of an entry-level engineer you would hire)", 25, cur_line+=5);
+	doc.text("4 = Good (at the level of an accomplished college senior)", 25, cur_line+=5);
+	doc.text("3 = Average (at the level typical of a college student)", 25, cur_line+=5);
+	doc.text("2 = Below Average (not up to the expectations for a college senior)", 25, cur_line+=5);
+	doc.text("1 = Poor (significant errors or omissions)", 25, cur_line+=5);
+	doc.text("N/A if no appropriate score applies", 25, cur_line+=5);
+
+	var columns = ["Design Project"].concat(data["judges"]);
+	var rows = [
+		["Technical Accuracy"].concat(data["scores"][0]),
+		["Creativity and Innovation"].concat(data["scores"][1]),
+		["Supporting Analytical Work"].concat(data["scores"][2]),
+		["Methodical Design Process Demonstrated"].concat(data["scores"][3]),
+		["Addresses Project Complexity Appropriately"].concat(data["scores"][4]),
+		["Expectation of Completion (by term's end)"].concat(data["scores"][5]),
+		["Design & Analysis of Tests"].concat(data["scores"][6]),
+		["Quality of Response during Q&A"].concat(data["scores"][7])
+	];
+	cell_padding = 1;
+	doc.autoTable(columns, rows, {
+		headerStyles: {
+			fillColor: [204,204,204],
+			textColor: 20
+		},
+		styles: {
+			cellPadding: cell_padding,
+			font: 'times',
+			overflow: 'linebreak',
+			halign: 'center',
+			rowHeight: 11.5
+		},
+		tableWidth: pwidth,
+		margin: 15,
+		startY: cur_line+=10,
+		drawRow: function(row, data) {
+			var num_lines = data["row"]["height"] / 11.5;
+			data["row"]["height"] = num_lines*4 + cell_padding*2;
+		},
+		drawHeaderRow: function(row, data) {
+			var num_lines = data["row"]["height"] / 11.5;
+			data["row"]["height"] = num_lines*4 + cell_padding*2;
+		},
+		drawCell: function(cell, data) {
+			var num_lines = (cell["height"] - 2*cell_padding) /4;
+			if (cell["raw"] == "N/A" || $.isNumeric(cell["raw"]) || cell["raw"] == "unscored")
+				cell["textPos"]["y"] += (num_lines - 1) * 2
+		}
+	});
+
+	doc.addPage();
+	cur_line = 20;
+	for (var i=0; i<data["considerations"].length; i++) {
+		data["considerations"][i] = data["considerations"][i].join("\n");
+	}
+	var columns = ["Presentation"].concat(data["judges"]);
+	var rows = [
+		["Organization"].concat(data["scores"][8]),
+		["Use of Allotted Time"].concat(data["scores"][9]),
+		["Visual Aids"].concat(data["scores"][10]),
+		["Confidence and Poise"].concat(data["scores"][11]),
+		["Totals"].concat(data["totals"]),
+		["Considerations"].concat(data["considerations"]),
+	];
+	var table2 = doc.autoTable(columns, rows, {
+		headerStyles: {
+			fillColor: [204,204,204],
+			textColor: 20
+		},
+		styles: {
+			cellPadding: cell_padding,
+			font: 'times',
+			overflow: 'linebreak',
+			halign: 'center',
+			rowHeight: 11.5
+		},
+		tableWidth: pwidth,
+		margin: 15,
+		startY: cur_line,
+		drawRow: function(row, data) {
+			var num_lines = data["row"]["height"] / 11.5;
+			data["row"]["height"] = num_lines*4 + cell_padding*2;
+			if (row["cells"][0]["raw"] == "Totals") {
+				for (var k in row['cells']) {
+					if ($.isNumeric(k)) {
+						row['cells'][k]['styles']['fontStyle'] = 'bold';
+						row['cells'][k]['styles']['textColor'] = 20;
+					}
+				}
+			}
+		},
+		drawHeaderRow: function(row, data) {
+			var num_lines = data["row"]["height"] / 11.5;
+			data["row"]["height"] = num_lines*4 + cell_padding*2;
+		},
+		drawCell: function(cell, data) {
+			var num_lines = (cell["height"] - 2*cell_padding) /4;
+			if (cell["raw"] == "N/A" || $.isNumeric(cell["raw"]) || cell["raw"] == "unscored")
+				cell["textPos"]["y"] += (num_lines - 1) * 2
+		}
+	});
+	cur_line = table2.autoTableEndPosY();
+	doc.setFontType("bold").text("Comments:", 15, cur_line+=10);
+	doc.setFontType("normal");
+	for (var i=0; i<data['judges'].length; i++) {
+		doc.setFontType("italic").text(data['judges'][i]+":", 15, cur_line+=7.5).setFontType("normal");
+		var comment_lines = doc.splitTextToSize(data["comments"][i], pwidth-45);
+		doc.text(comment_lines, 30, cur_line+=5);
+		cur_line += 5 * (comment_lines.length - 1);
+	}
+	return doc;
+	doc.save();
 }
 
 function member_string(members) {
