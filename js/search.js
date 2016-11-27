@@ -7,22 +7,25 @@ var sessions = [];
 var prop = "title";
 var adcending = false;
 
+/* Get the $_GET variable from the url */
 document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
     function decode(s) {
         return decodeURIComponent(s.split("+").join(" "));
     }
-
     $_GET[decode(arguments[1])] = decode(arguments[2]);
 });
 
+/* If the admin wants to go back to their homepage */
 $("#Back").click(function() {
 	window.location = "admin.html";
 });
 
+/* Make sure the user is a logged in admin */
 $.get('php/check_login.php', function(data) {
 	if (data == "new" || data == "no") window.location = "login.html";
 });
 
+/* Populate the search table with all the presentations from the given year */
 $.get('php/get_all_presentations_admin.php', {year: $_GET["year"]}, function(data) {
 	if (data == "die")
 		window.location = "admin.html";
@@ -31,24 +34,37 @@ $.get('php/get_all_presentations_admin.php', {year: $_GET["year"]}, function(dat
 	presentations = data["presentations"];
 	current_pres = presentations;
 	var plen = presentations.length;
+
+	/* Set the session for each presentation, and then sort the array of members */
 	for (var i=0; i<plen; i++) {
 		presentations[i]["session"] = session_info[presentations[i]["key"]]["session"];
 		presentations[i]["members"].sort();
 	}
 	current_pres = presentations;
+
+	/* Display results sorted by title */
 	sort_results("title", true);
 });
 
+/* 
+ * This function resets the search results with the given results
+ *
+ * @param results: The results to insert into the search table
+ */
 function update_results(results) {
 	current_pres = results;
+
+	/* Remove everything except the header rows */
 	$("tr").not($(".perm")).remove();
 	$("option").not($(".perm")).remove();
+
+	/* Add rows to the search table */
 	var rlen = results.length;
 	for (var i=0; i<rlen; i++) {
 		$("#search-table").append("<tr id='"+i+"'></tr>");
 		$("#"+i).append("<td id='title"+i+"'></td><td id='presenters"+i+"'></td><td id='dept"+i+"'></td><td id='sess"+i+"'></td><td><button id='download"+i+"' class='centerbutton btn btn-primary' id='button"+i+"'>Download</button></td>");
 		$("#title"+i).text(results[i]['title']);
-		$("#presenters"+i).text(member_string(results[i]["members"]));
+		$("#presenters"+i).text(name2string(results[i]["members"]));
 		$("#dept"+i).text(results[i]["department"]);
 		var session = session_info[results[i]["key"]]["session"]
 		$("#sess"+i).text(session);
@@ -62,12 +78,15 @@ function update_results(results) {
 		set_download_func(i, results);
 	}
 	
+	/* Sort the departments before putting them in the dropdown menu */
 	departments.sort();
 	var dlen = departments.length;
 	for (var i=0; i<dlen; i++) {
 		var string = $("<div/>").html(departments[i]).text();
 		$("#dept").append("<option value='"+string+"'>"+string+"</option>");
 	}
+
+	/* Sort the sessions before putting them in the dropdown menu */
 	sessions.sort();
 	var slen = sessions.length;
 	for (var i=0; i<slen; i++) {
@@ -76,79 +95,38 @@ function update_results(results) {
 	}
 }
 
+/*
+ * This function defines the download button for each entry in the search table
+ * If this is called, then a pdf will be downloaded
+ *
+ * @param i: the id of the presentation that is to be downloaded
+ * @param results: the array of currently displayed presentations
+ */
 function set_download_func(i, results) {
 	$("#download"+i).click(function() {
+		/* Get the information for the presentation we want to download */
 		$.get("php/get_presentation.php",
 			{year:$_GET["year"],key:results[i]["key"], num:results[i]["number"]},
 			function(data) {
+				/* Generate and save the pdf */
 				var doc = generate_pdf(data);
 				doc.save($("#title"+i).text());
-			});
-		return;
-		window.open("download.php?year="+$_GET["year"]+"&key="+results[i]["key"]+"&num="+results[i]["number"], '_blank');
-		return;
-
-/*		var doc = new jsPDF();
-		doc.text(20,20,'This PDF has a title, subject, author, keywords, and a creator. So good luck with that shit. It also has a really long line that I hope will wrap around');
-		doc.setProperties({
-			title: 'Title',
-			subject: 'This is the subject',
-			author: 'My name',
-			creator: 'jspdf'
-		});
-		doc.save('Test.pdf');
-		return;
-*/
-//		window.location = "download.php?year="+$_GET["year"]+"&key="+results[i]["key"]+"&num="+results[i]["number"];
-//		return;
-		$.get("download.php", {year:$_GET["year"], key:results[i]["key"], num:results[i]["number"]}, function(data) {
-		var pdf = new jsPDF('p', 'in', 'letter');
-		var parser = new DOMParser();
-		var d = parser.parseFromString(data, "text/html");
-		//console.log(d.childNodes[1].childNodes[2]);
-		console.log(d);
-		console.log(typeof data);
-		console.log(data);
-		console.log(typeof $(data)[11]);
-		for (var p in $(data)[11]) {
-			if (typeof $(data)[11][p] === "function") {
-				console.log(p);
 			}
-		}
-		console.log($(data)[11].toString());
-		return;
-		html2pdf(d.childNodes[1].childNodes[2], pdf, function(finishedpdf) {
-			finishedpdf.save('Testing.pdf');
-		});
-		return;
-			var pdf = new jsPDF('p', 'in', 'letter');
-			specialElementHandlers = {
-				'#bypassme':function(element, renderer) {
-					return true;
-				}
-			};
-			margins = {
-				top: 0.5,
-				bottom: 0.5,
-				left: 0.5,
-				width: 7.5
-			};
-			pdf.fromHTML(
-				data,
-				margins.left,
-				margins.top, {
-					'width':margins.width,
-					'elementHandlers': specialElementHandlers
-				}, function(dispose) {
-					pdf.save('Test.pdf');
-				});
-		});
+		);
 	});
 }
 
+/*
+ * This function generates the pdf
+ *
+ * @param data: the presentation score and information
+ *
+ * @return the jsPDF document that can be saved
+ */
 function generate_pdf(data) {
 	data = JSON.parse(data);
-	console.log(data);
+
+	/* Create and the jsPDF document and sets the font */
 	var doc = new jsPDF();
 	doc.setFontSize(12);
 	doc.setFont("times");
@@ -163,15 +141,15 @@ function generate_pdf(data) {
 	doc.text("PROJECT EVALUATION FORM", pwidth/2, cur_line+=7.5, 'center');
 	doc.text("Session:", 15, cur_line+=7.5).setFontType("normal").text(data["session"], 50, cur_line).setFontType("bold");
 	doc.text("Room #:", 15, cur_line+=5).setFontType("normal").text(data["room"], 50, cur_line).setFontType("bold");
-	doc.text("Project Title:", 15, cur_line+=7.5).setFontType("normal");//.text(data["title"], 50, cur_line).setFontType("bold");
+	doc.text("Project Title:", 15, cur_line+=7.5).setFontType("normal");
 		line = doc.splitTextToSize(data["title"], pwidth-65);
 		doc.text(line, 50, cur_line).setFontType("bold");
 		cur_line += 5 * (line.length - 1);
-	doc.text("Group Members:", 15, cur_line+=5).setFontType("normal");//.text(data["members"], 50, cur_line).setFontType("bold");
+	doc.text("Group Members:", 15, cur_line+=5).setFontType("normal");
 		line = doc.splitTextToSize(data["members"], pwidth-65);
 		doc.text(line, 50, cur_line).setFontType("bold");
 		cur_line += 5 * (line.length - 1);
-	doc.text("Advisors:", 15, cur_line+=5).setFontType("normal");//.text(data["advisors"], 50, cur_line).setFontType("bold");
+	doc.text("Advisors:", 15, cur_line+=5).setFontType("normal");
 		line = doc.splitTextToSize(data["advisors"], pwidth-65);
 		doc.text(line, 50, cur_line).setFontType("bold");
 		cur_line += 5 * (line.length - 1);
@@ -184,6 +162,7 @@ function generate_pdf(data) {
 	doc.text("1 = Poor (significant errors or omissions)", 25, cur_line+=5);
 	doc.text("N/A if no appropriate score applies", 25, cur_line+=5);
 
+	/* Create and add the first jsPDF-AutoTable */
 	var columns = ["Design Project"].concat(data["judges"]);
 	var rows = [
 		["Technical Accuracy"].concat(data["scores"][0]),
@@ -231,6 +210,8 @@ function generate_pdf(data) {
 	for (var i=0; i<data["considerations"].length; i++) {
 		data["considerations"][i] = data["considerations"][i].join("\n");
 	}
+
+	/* Create and add the second jsPDF-AutoTable */
 	var columns = ["Presentation"].concat(data["judges"]);
 	var rows = [
 		["Organization"].concat(data["scores"][8]),
@@ -278,6 +259,8 @@ function generate_pdf(data) {
 		}
 	});
 	cur_line = table2.autoTableEndPosY();
+
+	/* Add the comments after the second table */
 	doc.setFontType("bold").text("Comments:", 15, cur_line+=10);
 	doc.setFontType("normal");
 	for (var i=0; i<data['judges'].length; i++) {
@@ -287,20 +270,27 @@ function generate_pdf(data) {
 		cur_line += 5 * (comment_lines.length - 1);
 	}
 	return doc;
-	doc.save();
 }
 
-function member_string(members) {
-	var mem_str = "";
-	var mlen = members.length;
-	if (mlen > 0)
-		mem_str = members[0];
-	for (var i=1; i<mlen; i++) {
-		mem_str += ", " + members[i];
+/*
+ * Helper function to combine an array of names into a single, properly formatted string
+ *
+ * @param names: The array of names
+ *
+ * @return The string of properly formatted names
+ */
+function name2string(names) {
+	var nae_str = "";
+	var nlen = names.length;
+	if (nlen > 0)
+		name_str = names[0];
+	for (var i=1; i<nlen; i++) {
+		name_str += ", " + names[i];
 	}
-	return mem_str;
+	return name_str;
 }
 
+/* Search functionality defined here */
 $("#title-search").keyup(function() {
 	search($("#title-search").val(), $("#presenter-search").val(), $("#dept").val(), $("#sess").val());
 });
@@ -316,17 +306,28 @@ $("#dept").change(function() {
 $("#sess").change(function() {
 	search($("#title-search").val(), $("#presenter-search").val(), $("#dept").val(), $("#sess").val());
 });
+/* End search functionality definition */
 
-
-//optimize to have another search function that is called when want to search through currently displayed items
+/*
+ * This function searches through the presentations when the user tries to search
+ * Could be optimized if we only search through the currently displayed presentations if the keyup is not backspace or enter
+ *
+ * @param title: The title they are searching for
+ * @param pres: The presenter that they are searching for
+ * @param dept: The department that they are searching for
+ * @param sess: The session that they are searching for
+ */
 function search(title, pres, dept, sess) {
 	cur_pres = [];
 	var plen = presentations.length;
 	for (var i=0; i<plen; i++) {
+		/* Compare the title first */
 		if (title != "") {
 			if (presentations[i]["title"].toLowerCase().indexOf(title.toLowerCase()) < 0)
 				continue;
 		}
+
+		/* Then compare the presenters */
 		if (pres != "") {
 			var flag = 1;
 			for (var j=0; j<presentations[i]["members"].length; j++) {
@@ -336,22 +337,36 @@ function search(title, pres, dept, sess) {
 			if (flag)
 				continue;
 		}
+
+		/* Then compare the department */
 		if (dept != "none") {
 			if (presentations[i]["department"] != dept)
 				continue;
 		}
+
+		/* Then compare the session */
 		if (sess != "none") {
 			if (session_info[presentations[i]["key"]]["session"] != sess)
 				continue;
 		}
+
+		/* If all of them match, add it to the array to be displayed later */
 		cur_pres.push(presentations[i]);
 	}
 	update_results(cur_pres);
+	/* Set the dropdowns */
 	$("#dept").val(dept);
 	$("#sess").val(sess);
 }
 
+/*
+ * This function sorts the currently displayed results depending on which sort option is selected
+ *
+ * @param prop: The property to sort by
+ * @param asc: Ascending or Descending
+ */
 function sort_results(prop, asc) {
+	/* Sort function defined here */
 	current_pres = current_pres.sort(function(a,b) {
 		if (asc) {
 			return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
@@ -363,6 +378,7 @@ function sort_results(prop, asc) {
 	update_results(current_pres);
 }
 
+/* Sort functionality defined here */
 $("#title_title").click(function () {
         sort_results("title", !ascending);
 });

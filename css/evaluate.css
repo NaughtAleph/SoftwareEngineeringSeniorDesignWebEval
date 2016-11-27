@@ -55,18 +55,6 @@ body {
 	right: 20px;
 }
 
-.finished {
-	background: #6c6;
-}
-
-.unfinished {
-	background: #c66;
-}
-
-.unfilled {
-	background: #ccc;
-}
-
 #form {
 	background: white;
 	width: 660px;
@@ -137,6 +125,7 @@ p {
 	float: left;
 	margin: 10px 10px 10px 0px;
 	padding: 10px;
+	background: #ccc;
 	border-width: 3px;
 	border-style: solid;
 	border-radius: 25px;
