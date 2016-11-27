@@ -20,6 +20,34 @@ $.get("php/get_years.php", function(data) {
 	}
 });
 
+/* Initialize the list keeping track of finished evaluations */
+$("#finished_button").click(function () {
+	$("#finished_button").remove();
+	$.get("php/check_finished.php", function(data) {
+		data = JSON.parse(data);
+		$.each(data, function(key, val) {
+			$("#finished").append("<div id='"+key+"'>"+key+": "+parseInt(val)+"</div>");
+		});
+		setTimeout(update_finished, 10000);
+	});
+});
+
+/* 
+ * The function to update the finished list
+ */
+function update_finished() {
+	$.get("php/check_finished.php", function(data) {
+		if (data != "die") {
+			data = JSON.parse(data);
+			$.each(data, function(key, val) {
+				$("#"+key).text(key+": "+parseInt(val));
+			});
+		}
+		/* Re-update every 10 seconds */
+		setTimeout(update_finished, 10000);
+	});
+}
+
 /* 
  * If choose to upload a config file, rewrites any config file uploaded for the current year
  */
@@ -174,6 +202,7 @@ function upload_worksheet(worksheet) {
 
 		/* Set the presentations.json file with all the information */
 		$.post("php/set_presentations.php", {data:'{"presentations":'+JSON.stringify(presentations)+',"sessioninfo":'+JSON.stringify(sess_info)+"}"}, function(data) {
+			$("#file").val('');
 			if (data == "die")
 				alert("There was an issue. Please try again.")
 			else

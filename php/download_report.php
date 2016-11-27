@@ -11,7 +11,7 @@ if ($_SESSION["admin"] == 1) {
 
 	/* Make sure that GET has the key 'year' */
 	if (!array_key_exists('year', $_GET))
-		die;
+		header("Location: ../admin.html");
 	$year = $_GET["year"];
 
 	$presentations = file_get_contents("secrets/".$year."/presentations.json") or die("Unable to get presentations");
@@ -45,6 +45,7 @@ if ($_SESSION["admin"] == 1) {
 	foreach ($keys as $k) {
 		$files = glob("scores/".$year."/".$k."*");
 		$scores = [];
+		$judges = "Judge";
 
 		/* Read the files that correspond to the current session */
 		foreach ($files as $f) {
@@ -63,6 +64,9 @@ if ($_SESSION["admin"] == 1) {
 			}
 			if ($nullflag) continue;
 			array_push($scores, $contents);
+			$base = basename($f, ".json");
+			preg_match("/_(.*)/", $base, $matches);
+			$judges = $judges.",".$matches[1];
 		}
 
 		/* Skip if this session has no pertinent scores */
@@ -109,10 +113,11 @@ if ($_SESSION["admin"] == 1) {
 
 				/* Write to the csv file */
 				file_put_contents("reports/".$session->$k->session.".csv", $p->title."\n", FILE_APPEND);
+				file_put_contents("reports/".$session->$k->session.".csv", $judges."\n", FILE_APPEND);
 				foreach ($output as $o) {
 					file_put_contents("reports/".$session->$k->session.".csv", $o."\n", FILE_APPEND);
 				}
-				file_put_contents("reports/".$session->$k->session.".csv","\n", FILE_APPEND);
+				file_put_contents("reports/".$session->$k->session.".csv","\n\n\n", FILE_APPEND);
 			}
 		}
 	}

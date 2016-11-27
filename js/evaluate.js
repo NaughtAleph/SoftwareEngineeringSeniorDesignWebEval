@@ -24,16 +24,32 @@ $("#login").click(function(){
  * @param clicked: The div that was clicked on and therefore called this function
  */
 function evaluate(clicked) {
+	/* Change the background so it doesn't scroll when the user scrolls through the form */
+	var nav = $("nav:eq(0)");
+	var t = nav.height() +
+		parseInt(nav.css("margin-bottom")) +
+		parseInt(nav.css("border-bottom-width")) +
+		parseInt(nav.css("border-top-width"));
+	$(".container:eq(0)").css({
+		"position":"fixed",
+		"top":t+"px"
+	});
+	$("nav:eq(0)").css({
+		"position":"fixed",
+		"top":"0px",
+		"width":"100%"
+	});
+
+	/* Stop final_submit button functionality so the judge can't tab to use it */
+	$("#final_submit").unbind("click");
+	$("#final_submit").click(function() {
+		alert("Please finish filling out this form and either choose submit or discard before submitting everything");
+	});
+
 	pres = presentations[clicked.id];
 
 	/* Add a div to cover up everything from being clicked on */
 	$("body").append("<div id='fade'></div>");
-
-	/* The best option is to have the form be saved if it is clicked on,	*/
-	/* In case they accidentally click on it				*/
-	$("#fade").click(function() {
-		save_form(clicked);
-	});
 
 	/* Append the form to be populated */
 	$("body").append("<div id='form'></div>");
@@ -58,7 +74,11 @@ function evaluate(clicked) {
 
 	/* Make everything fade in, nice and smooth */
 	$("#fade").fadeIn("slow", function() {
-		//Nothing needs to be done here, but something may be added
+		/* The best option is to have the form be saved if it is clicked on,	*/
+		/* In case they accidentally click on it				*/
+		$("#fade").click(function() {
+			save_form(clicked);
+		});
 	});
 	$("#form").fadeIn("slow", function() {
 		//Nothing needs to be done here, but something may be added
@@ -149,91 +169,91 @@ function populate_form(clicked) {
 	$("#input").append("<div class='form_title'>Design Project</div>");
 	$("#input").append("<div id='des_proj'></div>");
         $("#des_proj").append("<table><tr><td class='category'>Technical Accuracy &nbsp;</td>"+
-                "<td><input type='radio' name='tec_acc' value='N/A' />&nbsp; N/A &nbsp; &nbsp;&nbsp;</td>"+
-                "<td><input type='radio' name='tec_acc' value='1' />&nbsp; 1 &nbsp; &nbsp;&nbsp;</td>"+
-                "<td><input type='radio' name='tec_acc' value='2' />&nbsp; 2 &nbsp; &nbsp;&nbsp;</td>"+
-                "<td><input type='radio' name='tec_acc' value='3' />&nbsp; 3 &nbsp; &nbsp;&nbsp;</td>"+
-                "<td><input type='radio' name='tec_acc' value='4' />&nbsp; 4 &nbsp; &nbsp;&nbsp;</td>"+
-                "<td><input type='radio' name='tec_acc' value='5' />&nbsp; 5 &nbsp; &nbsp;&nbsp;</td></tr>"+
+                "<td>&nbsp;<input type='radio' name='tec_acc' value='N/A' />&nbsp;N/A &nbsp; &nbsp;&nbsp;</td>"+
+                "<td><input type='radio' name='tec_acc' value='1' />&nbsp;1 &nbsp; &nbsp;&nbsp;</td>"+
+                "<td><input type='radio' name='tec_acc' value='2' />&nbsp;2 &nbsp; &nbsp;&nbsp;</td>"+
+                "<td><input type='radio' name='tec_acc' value='3' />&nbsp;3 &nbsp; &nbsp;&nbsp;</td>"+
+                "<td><input type='radio' name='tec_acc' value='4' />&nbsp;4 &nbsp; &nbsp;&nbsp;</td>"+
+                "<td><input type='radio' name='tec_acc' value='5' />&nbsp;5 &nbsp; &nbsp;&nbsp;</td></tr>"+
 	"<tr><td class='category'>Creativity and Innovation &nbsp;</td>"+
-		"<td><input type='radio' name='cre_ino' value='N/A' />&nbsp; N/A &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='cre_ino' value='1' />&nbsp; 1 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='cre_ino' value='2' />&nbsp; 2 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='cre_ino' value='3' />&nbsp; 3 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='cre_ino' value='4' />&nbsp; 4 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='cre_ino' value='5' />&nbsp; 5 &nbsp;&nbsp;</td></tr>"+
+		"<td>&nbsp;<input type='radio' name='cre_ino' value='N/A' />&nbsp;N/A &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='cre_ino' value='1' />&nbsp;1 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='cre_ino' value='2' />&nbsp;2 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='cre_ino' value='3' />&nbsp;3 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='cre_ino' value='4' />&nbsp;4 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='cre_ino' value='5' />&nbsp;5 &nbsp;&nbsp;</td></tr>"+
 	"<tr><td class='category'>Supporting Analytical Work &nbsp;</td>"+
-		"<td><input type='radio' name='sup_ana' value='N/A' />&nbsp; N/A &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='sup_ana' value='1' />&nbsp; 1 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='sup_ana' value='2' />&nbsp; 2 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='sup_ana' value='3' />&nbsp; 3 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='sup_ana' value='4' />&nbsp; 4 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='sup_ana' value='5' />&nbsp; 5 &nbsp;&nbsp;</td></tr>"+
+		"<td>&nbsp;<input type='radio' name='sup_ana' value='N/A' />&nbsp;N/A &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='sup_ana' value='1' />&nbsp;1 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='sup_ana' value='2' />&nbsp;2 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='sup_ana' value='3' />&nbsp;3 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='sup_ana' value='4' />&nbsp;4 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='sup_ana' value='5' />&nbsp;5 &nbsp;&nbsp;</td></tr>"+
 	"<tr><td class='category'>Methodical Design Process Demonstrated &nbsp;</td>"+
-		"<td><input type='radio' name='des_pro' value='N/A' />&nbsp; N/A &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='des_pro' value='1' />&nbsp; 1 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='des_pro' value='2' />&nbsp; 2 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='des_pro' value='3' />&nbsp; 3 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='des_pro' value='4' />&nbsp; 4 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='des_pro' value='5' />&nbsp; 5 &nbsp;&nbsp;</td></tr>"+
+		"<td>&nbsp;<input type='radio' name='des_pro' value='N/A' />&nbsp;N/A &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='des_pro' value='1' />&nbsp;1 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='des_pro' value='2' />&nbsp;2 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='des_pro' value='3' />&nbsp;3 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='des_pro' value='4' />&nbsp;4 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='des_pro' value='5' />&nbsp;5 &nbsp;&nbsp;</td></tr>"+
 	"<tr><td class='category'>Addresses Project Complexity Appropriately &nbsp;</td>"+
-		"<td><input type='radio' name='pro_com' value='N/A' />&nbsp; N/A &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='pro_com' value='1' />&nbsp; 1 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='pro_com' value='2' />&nbsp; 2 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='pro_com' value='3' />&nbsp; 3 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='pro_com' value='4' />&nbsp; 4 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='pro_com' value='5' />&nbsp; 5 &nbsp;&nbsp;</td></tr>"+
+		"<td>&nbsp;<input type='radio' name='pro_com' value='N/A' />&nbsp;N/A &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='pro_com' value='1' />&nbsp;1 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='pro_com' value='2' />&nbsp;2 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='pro_com' value='3' />&nbsp;3 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='pro_com' value='4' />&nbsp;4 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='pro_com' value='5' />&nbsp;5 &nbsp;&nbsp;</td></tr>"+
 	"<tr><td class='category'>Expectation of Completion (by term's end) &nbsp;</td>"+
-		"<td><input type='radio' name='exp_com' value='N/A' />&nbsp; N/A &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='exp_com' value='1' />&nbsp; 1 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='exp_com' value='2' />&nbsp; 2 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='exp_com' value='3' />&nbsp; 3 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='exp_com' value='4' />&nbsp; 4 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='exp_com' value='5' />&nbsp; 5 &nbsp;&nbsp;</td></tr>"+
+		"<td>&nbsp;<input type='radio' name='exp_com' value='N/A' />&nbsp;N/A &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='exp_com' value='1' />&nbsp;1 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='exp_com' value='2' />&nbsp;2 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='exp_com' value='3' />&nbsp;3 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='exp_com' value='4' />&nbsp;4 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='exp_com' value='5' />&nbsp;5 &nbsp;&nbsp;</td></tr>"+
 	"<tr><td class='category'>Design and Analysis of Tests &nbsp;</td>"+
-		"<td><input type='radio' name='des_ana' value='N/A' />&nbsp; N/A &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='des_ana' value='1' />&nbsp; 1 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='des_ana' value='2' />&nbsp; 2 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='des_ana' value='3' />&nbsp; 3 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='des_ana' value='4' />&nbsp; 4 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='des_ana' value='5' />&nbsp; 5 &nbsp;&nbsp;</td></tr>"+
+		"<td>&nbsp;<input type='radio' name='des_ana' value='N/A' />&nbsp;N/A &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='des_ana' value='1' />&nbsp;1 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='des_ana' value='2' />&nbsp;2 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='des_ana' value='3' />&nbsp;3 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='des_ana' value='4' />&nbsp;4 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='des_ana' value='5' />&nbsp;5 &nbsp;&nbsp;</td></tr>"+
 	"<tr><td class='category'>Quality of Response During Q&A &nbsp;</td>"+
-		"<td><input type='radio' name='res_qa' value='N/A' />&nbsp; N/A &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='res_qa' value='1' />&nbsp; 1 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='res_qa' value='2' />&nbsp; 2 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='res_qa' value='3' />&nbsp; 3 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='res_qa' value='4' />&nbsp; 4 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='res_qa' value='5' />&nbsp; 5 &nbsp;&nbsp;</td></tr></table>");
+		"<td>&nbsp;<input type='radio' name='res_qa' value='N/A' />&nbsp;N/A &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='res_qa' value='1' />&nbsp;1 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='res_qa' value='2' />&nbsp;2 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='res_qa' value='3' />&nbsp;3 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='res_qa' value='4' />&nbsp;4 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='res_qa' value='5' />&nbsp;5 &nbsp;&nbsp;</td></tr></table>");
 	$("#input").append("<br><div class='form_title'>Presentation</div>");
 	$("#input").append("<div id='pres'></div>");
 	$("#pres").append("<table><tr><td class='category'>Organization &nbsp;</td>"+
-		"<td><input type='radio' name='org' value='N/A' />&nbsp; N/A &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='org' value='1' />&nbsp; 1 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='org' value='2' />&nbsp; 2 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='org' value='3' />&nbsp; 3 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='org' value='4' />&nbsp; 4 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='org' value='5' />&nbsp; 5 &nbsp;&nbsp;</td></tr>"+
+		"<td>&nbsp;<input type='radio' name='org' value='N/A' />&nbsp;N/A &nbsp; &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='org' value='1' />&nbsp;1 &nbsp; &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='org' value='2' />&nbsp;2 &nbsp; &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='org' value='3' />&nbsp;3 &nbsp; &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='org' value='4' />&nbsp;4 &nbsp; &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='org' value='5' />&nbsp;5 &nbsp; &nbsp;&nbsp;</td></tr>"+
 	"<tr><td class='category'>Use of Allotted Time &nbsp;</td>"+
-		"<td><input type='radio' name='all_tim' value='N/A' />&nbsp; N/A &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='all_tim' value='1' />&nbsp; 1 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='all_tim' value='2' />&nbsp; 2 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='all_tim' value='3' />&nbsp; 3 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='all_tim' value='4' />&nbsp; 4 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='all_tim' value='5' />&nbsp; 5 &nbsp;&nbsp;</td></tr>"+
+		"<td>&nbsp;<input type='radio' name='all_tim' value='N/A' />&nbsp;N/A &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='all_tim' value='1' />&nbsp;1 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='all_tim' value='2' />&nbsp;2 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='all_tim' value='3' />&nbsp;3 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='all_tim' value='4' />&nbsp;4 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='all_tim' value='5' />&nbsp;5 &nbsp;&nbsp;</td></tr>"+
 	"<tr><td class='category'>Visual Aids &nbsp;</td>"+
-		"<td><input type='radio' name='vis_aid' value='N/A' />&nbsp; N/A &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='vis_aid' value='1' />&nbsp; 1 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='vis_aid' value='2' />&nbsp; 2 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='vis_aid' value='3' />&nbsp; 3 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='vis_aid' value='4' />&nbsp; 4 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='vis_aid' value='5' />&nbsp; 5 &nbsp;&nbsp;</td></tr>"+
+		"<td>&nbsp;<input type='radio' name='vis_aid' value='N/A' />&nbsp;N/A &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='vis_aid' value='1' />&nbsp;1 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='vis_aid' value='2' />&nbsp;2 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='vis_aid' value='3' />&nbsp;3 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='vis_aid' value='4' />&nbsp;4 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='vis_aid' value='5' />&nbsp;5 &nbsp;&nbsp;</td></tr>"+
 	"<tr><td class='category'>Confdence and Poise &nbsp;</td>"+
-		"<td><input type='radio' name='con_poi' value='N/A' />&nbsp; N/A &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='con_poi' value='1' />&nbsp; 1 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='con_poi' value='2' />&nbsp; 2 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='con_poi' value='3' />&nbsp; 3 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='con_poi' value='4' />&nbsp; 4 &nbsp;&nbsp;</td>"+
-		"<td><input type='radio' name='con_poi' value='5' />&nbsp; 5 &nbsp;&nbsp;</td></tr></table>");
+		"<td>&nbsp;<input type='radio' name='con_poi' value='N/A' />&nbsp;N/A &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='con_poi' value='1' />&nbsp;1 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='con_poi' value='2' />&nbsp;2 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='con_poi' value='3' />&nbsp;3 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='con_poi' value='4' />&nbsp;4 &nbsp;&nbsp;</td>"+
+		"<td><input type='radio' name='con_poi' value='5' />&nbsp;5 &nbsp;&nbsp;</td></tr></table>");
 
 	$("#input").append("<br><div>Please check each of the following considerations that were addressed in the presentation:</div>");
 	$("#input").append("<div><input type='checkbox' name='addressed' value='econ' />&nbsp; Economic</div>");
@@ -256,7 +276,12 @@ function populate_form(clicked) {
 				$("input[name="+scoring[i]+"][value='"+scores[clicked.id]['values'][i]+"']").prop('checked',true);
 				continue;
 			}
-			else continue;
+			else {
+				if ($("#"+clicked.id).css("background-color") == "rgb(223, 159, 159)") {
+					$(".category:eq("+i+")").css("border", "2px solid rgb(223,159,159)");
+				}
+				continue;
+			}
 		}
 		$("input[name="+scoring[i]+"][value="+scores[clicked.id]['values'][i]+"]").prop('checked',true);
 	}
@@ -291,19 +316,29 @@ function save_form(clicked) {
 			score.push(parseInt(val));
 	}
 
-	/* If there was a radio group that wasn't chosen, then the presentation goes red (incomplete) */
 	var nanflag = false;
+	var allnan = true;
+	/* If no score was filled out act as though it was an accidental click and don't change any colors */
 	for (var i=0; i<score.length; i++) {
-		if (isNaN(score[i]) && score[i] != "N/A") {
-			nanflag = true;
-			$("#"+clicked.id).css("background", "#c66");
+		if (!isNaN(score[i]) || score[i] == "N/A") {
+			allnan = false;
 			break;
 		}
 	}
+	if (!allnan) {
+		/* If there was a radio group that wasn't chosen, then the presentation goes red (incomplete) */
+		for (var i=0; i<score.length; i++) {
+			if (isNaN(score[i]) && score[i] != "N/A") {
+				nanflag = true;
+				$("#"+clicked.id).css("background", "#c66");
+				break;
+			}
+		}
 
-	/* If every radio group has a selected element, then the presentation goes green (completed) */
-	if (!nanflag)
-		$("#"+clicked.id).css("background", "#6c6");
+		/* If every radio group has a selected element, then the presentation goes green (completed) */
+		if (!nanflag)
+			$("#"+clicked.id).css("background", "#6c6");
+	}
 	scores[clicked.id]['values'] = score;
 	scores[clicked.id]['considerations'] = [];
 	for (var i=0; i<cons.length; i++) {
@@ -320,6 +355,28 @@ function cancel_form() {
 	/* Nothing has to be saved or checked if they choose to discard changes */
 	$("#fade").remove();
 	$("#form").remove();
+	$(".container:eq(0)").css({
+		"position":"inherit",
+		"top":"auto"
+	});
+	$("nav:eq(0)").css({
+		"position":"inherit",
+		"top":"auto",
+		"width":"auto"
+	});
+
+	/* Reinitialize the submit button when the form is closed */
+	$("#final_submit").unbind("click");
+	$("#final_submit").click(function() {
+		var conf = confirm("Are you sure you want to submit?\nIf you submit any other scores under your same name, they will overwite these ones.");
+		if (conf) {
+
+			/* POST is used here because GET complained about the size of the data being sent */
+			$.post("php/save_scores.php", {scores: JSON.stringify(scores),name: judge}, function(data) {
+				window.location.href = "index.html";
+			});
+		}
+	});
 }
 
 /* Make sure that the user is a logged in judge */
@@ -345,7 +402,8 @@ $.get('php/get_session_info.php', function(data) {
 		$("#session").text(session_info['session'] + " - " + session_info['room']);
 
 		/* Ask for judge's name */
-		$("#judge").append("<input type='text' class='form-control' placeholder='Insert Your Name' id='judgename' autofocus><input id='name' class='btn btn-primary' value='Submit'>");
+		$("#judge").append("<div class='form-group'><input role='form' type='text' class='form-control' placeholder='Insert Your Name' id='judgename' autofocus></div><input id='name' class='btn btn-primary' type='submit'>");
+		$("#judgename").attr("autocomplete", "off");
 
 		/* When the judge submits their name... */
 		$("#name").click(function() {
@@ -378,10 +436,11 @@ $.get('php/get_session_info.php', function(data) {
 
 					/* Otherwise, clear the judge name */
 					} else {
-						$("#judgename").val("");
+						$("#judgename").val("").focus();
 					}
 				}
 			});
+			return false;
 		});
 	} else {
 		window.location.href = "index.html";

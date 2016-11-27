@@ -110,7 +110,7 @@ function set_download_func(i, results) {
 			function(data) {
 				/* Generate and save the pdf */
 				var doc = generate_pdf(data);
-				doc.save($("#title"+i).text());
+				doc.save($("#title"+i).text() + ".pdf");
 			}
 		);
 	});

@@ -11,6 +11,10 @@ body {
 	font-family: sans-serif;
 }
 
+.category {
+	padding: 0px 1px;
+}
+
 .centerbutton {
 	margin: auto;
 	display: block;
@@ -80,6 +84,10 @@ body {
 
 h1, h2 {
 	font-weight: bold;
+}
+
+html {
+	overflow-y: scroll;
 }
 
 #information {

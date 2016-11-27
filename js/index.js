@@ -3,6 +3,8 @@ $("#login").click(function(){
 	window.location = "login.html"
 });
 
+$("input").attr("autocomplete","off");
+
 /* Check if the user has already tried to log in */
 $.get('php/check_session.php', function(data) {
 	if (data == "no") {
