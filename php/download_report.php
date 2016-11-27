@@ -36,10 +36,10 @@ if ($_SESSION["admin"] == 1) {
 	}
 
 	/* Lock the folder "reports" for writing */
-//	$lock_file = fopen(".locker","w+");
-//	if (!flock($lock_file, LOCK_EX)) {
-//		die("Something went wrong. Someone is using the files already");
-//	}
+	$lock_file = fopen(".locker","w+");
+	if (!flock($lock_file, LOCK_EX)) {
+		die("Something went wrong. Someone is using the files already");
+	}
 
 	/* For each session, make a csv file from the scores */
 	foreach ($keys as $k) {
@@ -139,7 +139,7 @@ if ($_SESSION["admin"] == 1) {
 	}
 
 	/* Release the file lock */
-//	flock($lock_file, LOCK_UN);
-//	fclose($lock_file);
+	flock($lock_file, LOCK_UN);
+	fclose($lock_file);
 }
 ?>
